@@ -31,7 +31,7 @@ defined( 'ABSPATH' ) || exit;
     *
     * @var Plugin
   */
-  public static $block_instance = [];
+  public static $page_instance = [];
 
   /**
     * Autoloader.
@@ -45,6 +45,27 @@ defined( 'ABSPATH' ) || exit;
 	  require_once \Angfuz_Ins::plugin_dir() . '/autoloader.php';
 	  Autoloader::run();
   } // loade the autoloader
+
+  /**
+    * Adding all the pages.
+    *
+    * @since 1.0.0
+    * @access private
+  */
+  static function register_pages(){
+    if (empty(self::$page_instance)) {
+      // Call the pages
+      self::$page_instance = [
+        "helper" => new \Angfuz_Ins\Helper\Init(),
+      ];
+      // Call the register functions
+      foreach(self::$page_instance as $key ){
+        if (method_exists($key, 'register')) {
+          $key->register();
+        }
+      }
+    }
+  }
 
   /**
     * Instance.
@@ -61,6 +82,8 @@ defined( 'ABSPATH' ) || exit;
 	if ( is_null( self::$instance ) ) {
     // Call the method for autoloader.
     self::registrar_autoloader();
+    // Call the method for all pages.
+    self::register_pages();
 	}
 	return self::$instance;
   }
