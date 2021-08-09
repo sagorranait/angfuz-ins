@@ -56,7 +56,8 @@ defined( 'ABSPATH' ) || exit;
     if (empty(self::$page_instance)) {
       // Call the pages
       self::$page_instance = [
-        "helper" => new \Angfuz_Ins\Helper\Init(),
+        "ins_helper" => new \Angfuz_Ins\Ins_Helper\Init(),
+        "ins_cpt"    => new \Angfuz_Ins\Ins_Cpt\Init(),
       ];
       // Call the register functions
       foreach(self::$page_instance as $key ){

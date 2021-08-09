@@ -1,5 +1,5 @@
 <?php
-namespace Angfuz_Ins\Helper;
+namespace Angfuz_Ins\Ins_Helper;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -38,7 +38,7 @@ class Init{
     * @access public
   */
   public function register() {
-    // Call the register-gutenberg function
+    // Call the register-helpers function
 	  $this->register_helpers();
   }
 
@@ -52,7 +52,7 @@ class Init{
     if (empty($this->$enqueue_instance)) {
       // Call the enqueue scripts
       $this->$enqueue_instance = [
-        "pricing" => new \Angfuz_Ins\Helper\Enqueue()
+        "pricing" => new \Angfuz_Ins\Ins_Helper\Enqueue()
       ];
       // Call the register functions
       foreach($this->$enqueue_instance as $key ){
