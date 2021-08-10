@@ -20,20 +20,24 @@ class Insurance{
 		wp_nonce_field( 'insurance_save_options_data', 'insurance_details_meta_box_nonce' );
 
 		$price = get_post_meta( $post->ID, '_insurance_price_key', true );
+		$price_info = get_post_meta( $post->ID, '_insurance_price_info_key', true );
 		$month = get_post_meta( $post->ID, '_insurance_month_key', true );
 		$rating = get_post_meta( $post->ID, '_insurance_rating_key', true );
 		$complatebtn = get_post_meta( $post->ID, '_insurance_complete_btn_key', true );
 		$quotebtn = get_post_meta( $post->ID, '_insurance_quote_btn_key', true );
 		
 		echo '<label for="insurance_price_key">Price : </label>';
-		echo '<input type="text" id="insurance_price_key" name="insurance_price_key" value="'.esc_attr($price).'" placeholder="Enter Your Insurance Price" size="100%"><br><br> ';
+		echo '<input type="text" id="insurance_price_key" name="insurance_price_key" value="'.esc_attr($price).'" placeholder="Enter Your Insurance Price" size="50%"><br><br>';
 
 		echo '<label for="insurance_month_key">Time : </label>';
 		echo '<select name="insurance_month_key" class="regular-text">
-      <option value="month" '.selected( 'month', $month, false ).'>month</option>
+			<option value="month" '.selected( 'month', $month, false ).'>month</option>
 			<option value="year" '.selected( 'year', $month, false ).'>year</option>
 			<option value="day" '.selected( 'day', $month, false ).'>day</option>
 		</select><br><br>';
+
+		echo '<label for="insurance_price_info_key">Price Info : </label>';
+		echo '<textarea id="insurance_price_info_key" name="insurance_price_info_key" rows="2" cols="50">'.esc_attr($price_info).'</textarea><br><br>';
 
 		echo '<label for="insurance_rating_key">Rating : </label>';
     echo '<select name="insurance_rating_key" class="regular-text">
@@ -45,10 +49,10 @@ class Insurance{
 		</select><br><br>';
 
 		echo '<label for="insurance_complete_btn_key">First Button : </label>';
-		echo '<input type="text" id="insurance_complete_btn_key" name="insurance_complete_btn_key" value="'.esc_attr($complatebtn).'" placeholder="Complete Online" size="100%"><br><br>';
+		echo '<input type="text" id="insurance_complete_btn_key" name="insurance_complete_btn_key" value="'.esc_attr($complatebtn).'" placeholder="Complete Online" size="50%"><br><br>';
 
 		echo '<label for="insurance_quote_btn_key">Second Button : </label>';
-		echo '<input type="text" id="insurance_quote_btn_key" name="insurance_quote_btn_key" value="'.esc_attr($quotebtn).'" placeholder="Reaquest a quote" size="100%"><br><br>';
+		echo '<input type="text" id="insurance_quote_btn_key" name="insurance_quote_btn_key" value="'.esc_attr($quotebtn).'" placeholder="Reaquest a quote" size="50%"><br><br>';
 	}
 }
 
