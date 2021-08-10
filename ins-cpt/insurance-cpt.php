@@ -21,14 +21,45 @@ class Insurance_Cpt{
   public $instance = null;
 
   /**
-    * Call all the Callbacks.
+    * Load the Callback Class.
     *
     * @since 1.0.0
     * @access public
     *
     * @var Plugin
   */
-  public $cpt_callback;
+  public $insurance_callback;
+
+	/**
+    * Initiate all the option name.
+    *
+    * @since 1.0.0
+    * @access public
+    *
+    * @var Plugin
+  */
+  public $insurance_key = [];
+
+	/**
+    * Constructor Function.
+    *
+    * @since 1.0.0
+    * @access public
+    *
+    * @var Plugin
+  */
+	function __construct() {
+		$this->insurance_callback = new \Angfuz_Ins\Ins_Cpt\Callbacks\Insurance();
+
+		// All Option key
+		$this->insurance_key = [
+			'_insurance_price_key' 				=> sanitize_text_field( $_POST['insurance_price_key']),
+			'_insurance_month_key' 				=> sanitize_text_field( $_POST['insurance_month_key']),
+			'_insurance_rating_key'				=> sanitize_text_field( $_POST['insurance_rating_key']),
+			'_insurance_complete_btn_key' => sanitize_text_field( $_POST['insurance_complete_btn_key']),
+			'_insurance_quote_btn_key'		=> sanitize_text_field( $_POST['insurance_quote_btn_key'])
+		];
+	}
 
   /**
     * Register all function here.
@@ -40,6 +71,10 @@ class Insurance_Cpt{
 		if (is_null($this->instance)) {
 			add_action( 'init', [$this, 'angfuzins_insurance_cpt']);
 		}
+
+		// Register Metabox
+		add_action( 'add_meta_boxes', [ $this, 'insurance_details_meta_box' ]);
+		add_action( 'save_post', [ $this, 'insurance_save_options_data' ]);
   }
 
   /**
@@ -65,6 +100,9 @@ class Insurance_Cpt{
 			'update_item'           => __('Update Insurance', 'angfuz-ins'),
 			'view_item'             => __('View Insurance', 'angfuz-ins'),
 			'view_items'            => __('View Insurances', 'angfuz-ins'),
+			'featured_image'        => __( 'Company Logo', 'angfuz-ins' ),
+			'set_featured_image'    => __( 'Set Company Logo', 'angfuz-ins' ),
+			'remove_featured_image' => __( 'Remove company logo', 'angfuz-ins' ),
 			'search_items'          => __('Search Insurances', 'angfuz-ins'),
 			'not_found'             => __('No Insurance Found', 'angfuz-ins'),
 			'not_found_in_trash'    => __('No Insurance Found in Trash', 'angfuz-ins'),
@@ -77,7 +115,7 @@ class Insurance_Cpt{
 
 		$args = [
 			'labels'              => $labels,
-			'supports'            => [ 'title', 'thumbnail', 'editor' ],
+			'supports'            => ['thumbnail'],
 			'taxonomies'          => [],
 			'hierarchical'        => false,
 			'public'              => true,
@@ -95,6 +133,25 @@ class Insurance_Cpt{
 		];
 
 		register_post_type('angfuzins-insurance', $args);
+	}
+
+	public function insurance_details_meta_box() {
+		add_meta_box( 'insurance_details', 'Insurance Details', [ $this->insurance_callback, 'insurance_input_callbacks' ], 'angfuzins-insurance' );
+	}
+
+	public function insurance_save_options_data( $post_id ) {
+
+		if ( ! isset($_POST['insurance_details_meta_box_nonce'])) return;
+		if ( ! wp_verify_nonce($_POST['insurance_details_meta_box_nonce'], 'insurance_save_options_data') ) return;
+		if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) return;
+		if ( ! current_user_can( 'edit_post', $post_id )) return;
+		if (! isset($_POST['insurance_price_key']) || ! isset($_POST['insurance_month_key']) || ! isset($_POST['insurance_rating_key']) || ! isset($_POST['insurance_complete_btn_key']) || ! isset($_POST['insurance_quote_btn_key']) ) {
+			return;
+		}
+
+		foreach ($this->insurance_key as $key => $value) {
+			update_post_meta( $post_id, $key, $value );
+		}
 	}
   
 }
