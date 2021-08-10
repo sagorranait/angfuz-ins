@@ -36,7 +36,7 @@ class Insurance{
 			<option value="day" '.selected( 'day', $month, false ).'>day</option>
 		</select><br><br>';
 
-		echo '<label for="insurance_price_info_key">Price Info : </label>';
+		echo '<label for="insurance_price_info_key">Price Note : </label>';
 		echo '<textarea id="insurance_price_info_key" name="insurance_price_info_key" rows="2" cols="50">'.esc_attr($price_info).'</textarea><br><br>';
 
 		echo '<label for="insurance_rating_key">Rating : </label>';
