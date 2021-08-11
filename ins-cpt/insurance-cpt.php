@@ -53,6 +53,7 @@ class Insurance_Cpt{
 
 		// All Option key
 		$this->insurance_key = [
+			'_insurance_batch_key' 				=> sanitize_text_field( $_POST['insurance_batch_key']),
 			'_insurance_price_key' 				=> sanitize_text_field( $_POST['insurance_price_key']),
 			'_insurance_price_info_key' 	=> sanitize_text_field( $_POST['insurance_price_info_key']),
 			'_insurance_month_key' 				=> sanitize_text_field( $_POST['insurance_month_key']),
@@ -75,6 +76,7 @@ class Insurance_Cpt{
 
 		// Register Metabox
 		add_action( 'add_meta_boxes', [ $this, 'insurance_details_meta_box' ]);
+		// Save the Options
 		add_action( 'save_post', [ $this, 'insurance_save_options_data' ]);
   }
 
@@ -133,20 +135,32 @@ class Insurance_Cpt{
 			'capability_type'     => 'post'
 		];
 
-		register_post_type('angfuzins-insurance', $args);
+		register_post_type('angfuzins-insurance', $args); // Register Meta box
 	}
 
+	/**
+    * Register Callback.
+    *
+    * @since 1.0.0
+    * @access public
+  */
 	public function insurance_details_meta_box() {
 		add_meta_box( 'insurance_details', 'Insurance Details', [ $this->insurance_callback, 'insurance_input_callbacks' ], 'angfuzins-insurance' );
 	}
 
+	/**
+    * Save Option Callback.
+    *
+    * @since 1.0.0
+    * @access public
+  */
 	public function insurance_save_options_data( $post_id ) {
 
 		if ( ! isset($_POST['insurance_details_meta_box_nonce'])) return;
 		if ( ! wp_verify_nonce($_POST['insurance_details_meta_box_nonce'], 'insurance_save_options_data') ) return;
 		if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) return;
 		if ( ! current_user_can( 'edit_post', $post_id )) return;
-		if (! isset($_POST['insurance_price_key']) || ! isset($_POST['insurance_price_info_key']) || ! isset($_POST['insurance_month_key']) || ! isset($_POST['insurance_rating_key']) || ! isset($_POST['insurance_complete_btn_key']) || ! isset($_POST['insurance_quote_btn_key']) ) {
+		if (! isset($_POST['insurance_batch_key']) || ! isset($_POST['insurance_price_key']) || ! isset($_POST['insurance_price_info_key']) || ! isset($_POST['insurance_month_key']) || ! isset($_POST['insurance_rating_key']) || ! isset($_POST['insurance_complete_btn_key']) || ! isset($_POST['insurance_quote_btn_key']) ) {
 			return;
 		}
 

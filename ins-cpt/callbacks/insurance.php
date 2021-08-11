@@ -19,12 +19,20 @@ class Insurance{
   public function insurance_input_callbacks( $post ) {
 		wp_nonce_field( 'insurance_save_options_data', 'insurance_details_meta_box_nonce' );
 
+		$batch = get_post_meta( $post->ID, '_insurance_batch_key', true );
 		$price = get_post_meta( $post->ID, '_insurance_price_key', true );
 		$price_info = get_post_meta( $post->ID, '_insurance_price_info_key', true );
 		$month = get_post_meta( $post->ID, '_insurance_month_key', true );
 		$rating = get_post_meta( $post->ID, '_insurance_rating_key', true );
 		$complatebtn = get_post_meta( $post->ID, '_insurance_complete_btn_key', true );
 		$quotebtn = get_post_meta( $post->ID, '_insurance_quote_btn_key', true );
+
+		echo '<label for="insurance_batch_key">Insurance Batch : </label>';
+		echo '<select name="insurance_batch_key" class="regular-text">
+			<option value="standard" '.selected( 'standard', $batch, false ).'>Standard</option>
+			<option value="gold" '.selected( 'gold', $batch, false ).'>Gold</option>
+			<option value="premium" '.selected( 'premium', $batch, false ).'>Premium</option>
+		</select><br><br>';
 		
 		echo '<label for="insurance_price_key">Price : </label>';
 		echo '<input type="text" id="insurance_price_key" name="insurance_price_key" value="'.esc_attr($price).'" placeholder="Enter Your Insurance Price" size="50%"><br><br>';
