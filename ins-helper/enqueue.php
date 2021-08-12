@@ -43,6 +43,7 @@ class Enqueue{
   */
   public function ins_enqueue_editor_scripts() {
 	  wp_enqueue_style( 'angfuzins-editor-css', \Angfuz_Ins::plugin_url().'assets/css/angfuz-ins.css', [], \Angfuz_Ins::version(), 'all');
+    wp_enqueue_media();
     wp_enqueue_script( 'angfuzins-editor-js', \Angfuz_Ins::plugin_url().'assets/js/angfuz-ins.js', ['jquery']);
   }
 

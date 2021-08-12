@@ -66,6 +66,31 @@ class Shortcode{
 		echo '<label for="insurance_categoryfour_number_key">Category Limit : </label>';
 		echo '<input type="number" id="insurance_categoryfour_number_key" name="insurance_categoryfour_number_key" value="'.$categoryfour_number.'" placeholder="Enter Category Number" size="100%"><br><br>';
 	}
+
+	public function insurance_supporter_info( $post ) {
+		wp_nonce_field( 'insurance_supporter_save_options', 'insurance_support_meta_box_nonce' );
+
+		$supporter_image = get_post_meta( $post->ID, '_insurance_support_image_key', true );
+		$supporter_title = get_post_meta( $post->ID, '_insurance_support_title_key', true );
+		$supporter_number = get_post_meta( $post->ID, '_insurance_support_number_key', true );
+		$supporter_gmail = get_post_meta( $post->ID, '_insurance_support_gamil_key', true );
+		$supporter_button = get_post_meta( $post->ID, '_insurance_support_button_key', true );
+
+		
+    echo '<input type="button" class="button button-secondary" value="Upload Support Image" id="supporter_image"/><input type="text" id="insurance_support_image_key" name="insurance_support_image_key" value="'.$supporter_image.'"/><br><br>';
+
+		echo '<label for="insurance_support_title_key">Title : </label>';
+    echo '<input type="text" id="insurance_support_title_key" name="insurance_support_title_key" value="'.$supporter_title.'" placeholder="Enter Your Title"><br><br>';
+
+		echo '<label for="insurance_support_number_key">Telephone : </label>';
+		echo '<input type="number" id="insurance_support_number_key" name="insurance_support_number_key" value="'.$supporter_number.'" placeholder="Enter Supporter Number"><br><br>';
+
+    echo '<label for="insurance_support_gamil_key">Email : </label>';
+    echo '<input type="email" id="insurance_support_gamil_key" name="insurance_support_gamil_key" value="'.$supporter_gmail.'" placeholder="Enter Support Email Name"><br><br>';
+
+		echo '<label for="insurance_support_button_key">Button Text : </label>';
+		echo '<input type="text" id="insurance_support_button_key" name="insurance_support_button_key" value="'.$supporter_button.'" placeholder="Contact Us"><br><br>';
+	}
   
 }
 
