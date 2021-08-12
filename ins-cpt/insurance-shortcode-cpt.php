@@ -61,6 +61,16 @@ class Insurance_Shortcode_Cpt{
   public $supporter_key = [];
 
 	/**
+    * Initiate Supporter Info.
+    *
+    * @since 1.0.0
+    * @access public
+    *
+    * @var Plugin
+  */
+  public $award_key = [];
+
+	/**
     * Constructor Function.
     *
     * @since 1.0.0
@@ -80,12 +90,16 @@ class Insurance_Shortcode_Cpt{
 		$this->shortcode_key = [
 			'_insurance_categoryone_key' 					=> sanitize_text_field( $_POST['insurance_categoryone_key']),
 			'_insurance_categoryone_number_key' 	=> sanitize_text_field( $_POST['insurance_categoryone_number_key']),
+			'_insurance_categoryone_note_key' 		=> sanitize_text_field( $_POST['_insurance_categoryone_note_key']),
 			'_insurance_categorytwo_key' 					=> sanitize_text_field( $_POST['insurance_categorytwo_key']),
 			'_insurance_categorytwo_number_key' 	=> sanitize_text_field( $_POST['insurance_categorytwo_number_key']),
+			'_insurance_categorytwo_note_key' 	=> sanitize_text_field( $_POST['insurance_categorytwo_note_key']),
 			'_insurance_categorythree_key' 				=> sanitize_text_field( $_POST['insurance_categorythree_key']),
 			'_insurance_categorythree_number_key' => sanitize_text_field( $_POST['insurance_categorythree_number_key']),
+			'_insurance_categorythree_note_key' => sanitize_text_field( $_POST['insurance_categorythree_note_key']),
 			'_insurance_categoryfour_key' 				=> sanitize_text_field( $_POST['insurance_categoryfour_key']),
 			'_insurance_categoryfour_number_key' 	=> sanitize_text_field( $_POST['insurance_categoryfour_number_key']),
+			'_insurance_categoryfour_note_key' 	=> sanitize_text_field( $_POST['insurance_categoryfour_note_key']),
 		];
 
 		// Supporter Key
@@ -94,7 +108,18 @@ class Insurance_Shortcode_Cpt{
 			'_insurance_support_title_key' 		=> sanitize_text_field( $_POST['insurance_support_title_key']),
 			'_insurance_support_number_key' 	=> sanitize_text_field( $_POST['insurance_support_number_key']),
 			'_insurance_support_gamil_key' 		=> sanitize_text_field( $_POST['insurance_support_gamil_key']),
-			'_insurance_support_button_key' 		=> sanitize_text_field( $_POST['insurance_support_button_key']),
+			'_insurance_support_button_key' 	=> sanitize_text_field( $_POST['insurance_support_button_key']),
+		];
+
+		// Supporter Key
+		$this->award_key = [
+			'_insurance_award_image_key' 								=> sanitize_text_field( $_POST['insurance_award_image_key']),
+			'_insurance_award_title_key' 								=> sanitize_text_field( $_POST['insurance_award_title_key']),
+			'_insurance_award_description_key' 					=> sanitize_text_field( $_POST['insurance_award_description_key']),
+			'_insurance_award_voted_key' 								=> sanitize_text_field( $_POST['insurance_award_voted_key']),
+			'_insurance_award_company_logo_key' 				=> sanitize_text_field( $_POST['insurance_award_company_logo_key']),
+			'_insurance_award_company_description_key' 	=> sanitize_text_field( $_POST['insurance_award_company_description_key']),
+			'_insurance_award_company_rating_key' 			=> sanitize_text_field( $_POST['insurance_award_company_rating_key']),
 		];
 	}
 
@@ -114,6 +139,7 @@ class Insurance_Shortcode_Cpt{
 		add_action( 'save_post', [ $this, 'insurance_shortcode_generator_save' ]);
 		add_action( 'save_post', [ $this, 'insurance_shortcode_save_options' ]);
 		add_action( 'save_post', [ $this, 'insurance_supporter_save_options' ]);
+		add_action( 'save_post', [ $this, 'insurance_award_save_options' ]);
   }
 
   /**
@@ -163,6 +189,7 @@ class Insurance_Shortcode_Cpt{
 		add_meta_box( 'short_code', 'Category Settings', [ $this->shortcode_callback, 'shortcode_category_callbacks' ], 'shortcode-cpt' );
 		add_meta_box( 'get_shortcode', 'Your Shortcode', [ $this->shortcode_callback, 'insurance_get_shortcode' ], 'shortcode-cpt' );
 		add_meta_box( 'insurance_support', 'Supporter Info', [ $this->shortcode_callback, 'insurance_supporter_info' ], 'shortcode-cpt', 'side');
+		add_meta_box( 'insurance_award', 'Award Info', [ $this->shortcode_callback, 'insurance_award_info' ], 'shortcode-cpt');
 	}
 
   public function insurance_shortcode_generator_save( $post_id ) {
@@ -196,6 +223,17 @@ class Insurance_Shortcode_Cpt{
 		if ( ! current_user_can( 'edit_post', $post_id )) return;
 
 		foreach ($this->supporter_key as $key => $value) {
+			update_post_meta( $post_id, $key, $value );
+		}
+	}
+
+	public function insurance_award_save_options( $post_id ){
+		if ( ! isset($_POST['insurance_award_meta_box_nonce'])) return;
+		if ( ! wp_verify_nonce($_POST['insurance_award_meta_box_nonce'], 'insurance_award_save_options') ) return;
+		if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) return;
+		if ( ! current_user_can( 'edit_post', $post_id )) return;
+
+		foreach ($this->award_key as $key => $value) {
 			update_post_meta( $post_id, $key, $value );
 		}
 	}
