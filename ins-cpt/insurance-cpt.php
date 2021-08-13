@@ -10,44 +10,11 @@ defined( 'ABSPATH' ) || exit;
  * @since 1.0.0
  */
 class Insurance_Cpt{
-  /**
-    * instance The Insurance cpt.
-    *
-    * @since 1.0.0
-    * @access public
-    *
-    * @var Plugin
- */
+
   public $instance = null;
-
-  /**
-    * Load the Callback Class.
-    *
-    * @since 1.0.0
-    * @access public
-    *
-    * @var Plugin
-  */
   public $insurance_callback;
-
-	/**
-    * Initiate all the option name.
-    *
-    * @since 1.0.0
-    * @access public
-    *
-    * @var Plugin
-  */
   public $insurance_key = [];
 
-	/**
-    * Constructor Function.
-    *
-    * @since 1.0.0
-    * @access public
-    *
-    * @var Plugin
-  */
 	function __construct() {
 		$this->insurance_callback = new \Angfuz_Ins\Ins_Cpt\Callbacks\Insurance();
 
@@ -63,29 +30,14 @@ class Insurance_Cpt{
 		];
 	}
 
-  /**
-    * Register all function here.
-    *
-    * @since 1.0.0
-    * @access public
-  */
   public function register() {
 		if (is_null($this->instance)) {
 			add_action( 'init', [$this, 'angfuzins_insurance_cpt']);
 		}
-
-		// Register Metabox
 		add_action( 'add_meta_boxes', [ $this, 'insurance_details_meta_box' ]);
-		// Save the Options
 		add_action( 'save_post', [ $this, 'insurance_save_options_data' ]);
   }
 
-  /**
-    * Register all the options for Insurance cpt.
-    *
-    * @since 1.0.0
-    * @access public
-  */
   public function angfuzins_insurance_cpt() {
 		$labels = [
 			'name'                  => __('Insurances', 'angfuz-ins'),
@@ -138,22 +90,10 @@ class Insurance_Cpt{
 		register_post_type('angfuzins-insurance', $args); // Register Meta box
 	}
 
-	/**
-    * Register Callback.
-    *
-    * @since 1.0.0
-    * @access public
-  */
 	public function insurance_details_meta_box() {
 		add_meta_box( 'insurance_details', 'Insurance Details', [ $this->insurance_callback, 'insurance_input_callbacks' ], 'angfuzins-insurance' );
 	}
 
-	/**
-    * Save Option Callback.
-    *
-    * @since 1.0.0
-    * @access public
-  */
 	public function insurance_save_options_data( $post_id ) {
 
 		if ( ! isset($_POST['insurance_details_meta_box_nonce'])) return;
