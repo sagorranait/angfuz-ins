@@ -54,9 +54,6 @@ class Init{
       $this->$cpt_instance = [
         "ins_cpt"      => new \Angfuz_Ins\Ins_Cpt\Insurance_Cpt(),
         "ins_category" => new \Angfuz_Ins\Ins_Cpt\Insurance_Category(),
-        "ins_accoummodation" => new \Angfuz_Ins\Ins_Cpt\Insurance_Accoummodation(),
-        "ins_contribution" => new \Angfuz_Ins\Ins_Cpt\Insurance_Contribution(),
-        "ins_date" => new \Angfuz_Ins\Ins_Cpt\Insurance_Date(),
         "ins_shortcode" => new \Angfuz_Ins\Ins_Cpt\Insurance_Shortcode_Cpt(),
       ];
       // Call the register functions
