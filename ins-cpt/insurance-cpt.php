@@ -24,9 +24,7 @@ class Insurance_Cpt{
 			'_insurance_price_key' 				=> sanitize_text_field( $_POST['insurance_price_key']),
 			'_insurance_price_info_key' 	=> sanitize_text_field( $_POST['insurance_price_info_key']),
 			'_insurance_month_key' 				=> sanitize_text_field( $_POST['insurance_month_key']),
-			'_insurance_rating_key'				=> sanitize_text_field( $_POST['insurance_rating_key']),
-			'_insurance_complete_btn_key' => sanitize_text_field( $_POST['insurance_complete_btn_key']),
-			'_insurance_quote_btn_key'		=> sanitize_text_field( $_POST['insurance_quote_btn_key'])
+			'_insurance_rating_key'				=> sanitize_text_field( $_POST['insurance_rating_key'])
 		];
 	}
 

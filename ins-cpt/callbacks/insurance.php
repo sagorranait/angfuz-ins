@@ -10,32 +10,29 @@ defined( 'ABSPATH' ) || exit;
  * @since 1.0.0
  */
 class Insurance{
-  /**
-    * Show all the input on Editor.
-    *
-    * @since 1.0.0
-    * @access public
-  */
+
   public function insurance_input_callbacks( $post ) {
 		wp_nonce_field( 'insurance_save_options_data', 'insurance_details_meta_box_nonce' );
 
-		$batch = get_post_meta( $post->ID, '_insurance_batch_key', true );
-		$price = get_post_meta( $post->ID, '_insurance_price_key', true );
+		$batch 			= get_post_meta( $post->ID, '_insurance_batch_key', true );
+		$price 			= get_post_meta( $post->ID, '_insurance_price_key', true );
 		$price_info = get_post_meta( $post->ID, '_insurance_price_info_key', true );
-		$month = get_post_meta( $post->ID, '_insurance_month_key', true );
-		$rating = get_post_meta( $post->ID, '_insurance_rating_key', true );
-		$complatebtn = get_post_meta( $post->ID, '_insurance_complete_btn_key', true );
-		$quotebtn = get_post_meta( $post->ID, '_insurance_quote_btn_key', true );
+		$month 			= get_post_meta( $post->ID, '_insurance_month_key', true );
+		$rating 		= get_post_meta( $post->ID, '_insurance_rating_key', true );
 
-		echo '<label for="insurance_batch_key">Insurance Batch : </label>';
-		echo '<select name="insurance_batch_key" class="regular-text">
-			<option value="standard" '.selected( 'standard', $batch, false ).'>Standard</option>
-			<option value="gold" '.selected( 'gold', $batch, false ).'>Gold</option>
-			<option value="premium" '.selected( 'premium', $batch, false ).'>Premium</option>
-		</select><br><br>';
-		
-		echo '<label for="insurance_price_key">Price : </label>';
-		echo '<input type="text" id="insurance_price_key" name="insurance_price_key" value="'.esc_attr($price).'" placeholder="Enter Your Insurance Price" size="50%"><br><br>';
+		$this->input_select('insurance_batch_key', 'Insurance Batch', [
+			'standard' => 'Standard',
+			'gold' => 'Gold',
+			'premium' => 'Premium',
+		], $batch);
+		// echo '<label for="insurance_batch_key">Insurance Batch : </label>';
+		// echo '<select name="insurance_batch_key" class="regular-text">
+		// 	<option value="standard" '.selected( 'standard', $batch, false ).'>Standard</option>
+		// 	<option value="gold" '.selected( 'gold', $batch, false ).'>Gold</option>
+		// 	<option value="premium" '.selected( 'premium', $batch, false ).'>Premium</option>
+		// </select><br><br>';
+
+		$this->input_text('insurance_price_key', 'Price', $price, 'Enter Your Insurance Price');
 
 		echo '<label for="insurance_month_key">Time : </label>';
 		echo '<select name="insurance_month_key" class="regular-text">
@@ -55,12 +52,21 @@ class Insurance{
 			<option value="4" '.selected( '4', $rating, false ).'>4 ⭐⭐⭐⭐</option>
 			<option value="5" '.selected( '5', $rating, false ).'>5 ⭐⭐⭐⭐⭐</option>
 		</select><br><br>';
+	}
 
-		echo '<label for="insurance_complete_btn_key">First Button : </label>';
-		echo '<input type="text" id="insurance_complete_btn_key" name="insurance_complete_btn_key" value="'.esc_attr($complatebtn).'" placeholder="Complete Online" size="50%"><br><br>';
+	private function input_text($id, $name, $value, $placeholder){
+		echo '<label for="'.$id.'">'.$name.' : </label>';
+		echo '<input type="text" id="insurance_price_key" name="insurance_price_key" value="'.esc_attr($value).'" placeholder="'.$placeholder.'" size="50%"><br><br>';
+	}
 
-		echo '<label for="insurance_quote_btn_key">Second Button : </label>';
-		echo '<input type="text" id="insurance_quote_btn_key" name="insurance_quote_btn_key" value="'.esc_attr($quotebtn).'" placeholder="Reaquest a quote" size="50%"><br><br>';
+	private function input_select($id, $name, array $values, $input_key){
+		echo '<label for="'.$id.'">'.$name.' : </label>';
+		echo '<select name="'.$id.'">';
+			foreach($values as $key => $value){
+				echo '<option value="'.$key.'" '.selected( "$key", $input_key, false ).'>'.$value.'</option>';
+				var_dump($input_key);
+			}
+		echo '</select><br><br>';
 	}
 }
 
