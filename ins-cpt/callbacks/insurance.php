@@ -20,51 +20,52 @@ class Insurance{
 		$month 			= get_post_meta( $post->ID, '_insurance_month_key', true );
 		$rating 		= get_post_meta( $post->ID, '_insurance_rating_key', true );
 
-		$this->input_select('insurance_batch_key', 'Insurance Batch', [
-			'standard' => 'Standard',
-			'gold' => 'Gold',
-			'premium' => 'Premium',
-		], $batch);
-		// echo '<label for="insurance_batch_key">Insurance Batch : </label>';
-		// echo '<select name="insurance_batch_key" class="regular-text">
-		// 	<option value="standard" '.selected( 'standard', $batch, false ).'>Standard</option>
-		// 	<option value="gold" '.selected( 'gold', $batch, false ).'>Gold</option>
-		// 	<option value="premium" '.selected( 'premium', $batch, false ).'>Premium</option>
-		// </select><br><br>';
+		$this->input_select('insurance_batch_key', 'Insurance Batch', $batch, 
+			[
+				'standard' => 'Standard',
+				'gold' => 'Gold',
+				'premium' => 'Premium',
+			]
+		);
 
 		$this->input_text('insurance_price_key', 'Price', $price, 'Enter Your Insurance Price');
 
-		echo '<label for="insurance_month_key">Time : </label>';
-		echo '<select name="insurance_month_key" class="regular-text">
-			<option value="month" '.selected( 'month', $month, false ).'>month</option>
-			<option value="year" '.selected( 'year', $month, false ).'>year</option>
-			<option value="day" '.selected( 'day', $month, false ).'>day</option>
-		</select><br><br>';
+		$this->input_select('insurance_month_key', 'Time', $month, 
+			[
+				'month' => 'month',
+				'year' => 'year',
+				'day' => 'day',
+			]
+		);
 
-		echo '<label for="insurance_price_info_key">Price Note : </label>';
-		echo '<textarea id="insurance_price_info_key" name="insurance_price_info_key" rows="2" cols="50">'.esc_attr($price_info).'</textarea><br><br>';
+		$this->input_textarea('insurance_price_info_key', 'Price Note', $price_info);
 
-		echo '<label for="insurance_rating_key">Rating : </label>';
-    echo '<select name="insurance_rating_key" class="regular-text">
-      <option value="1" '.selected( '1', $rating, false ).'>1 ⭐</option>
-			<option value="2" '.selected( '2', $rating, false ).'>2 ⭐⭐</option>
-			<option value="3" '.selected( '3', $rating, false ).'>3 ⭐⭐⭐</option>
-			<option value="4" '.selected( '4', $rating, false ).'>4 ⭐⭐⭐⭐</option>
-			<option value="5" '.selected( '5', $rating, false ).'>5 ⭐⭐⭐⭐⭐</option>
-		</select><br><br>';
+		$this->input_select('insurance_rating_key', 'Rating', $rating, 
+			[
+				'1' => '1 ⭐',
+				'2' => '2 ⭐⭐',
+				'3' => '3 ⭐⭐⭐',
+				'4' => '4 ⭐⭐⭐⭐',
+				'5' => '5 ⭐⭐⭐⭐⭐',
+			]
+		);
 	}
 
 	private function input_text($id, $name, $value, $placeholder){
 		echo '<label for="'.$id.'">'.$name.' : </label>';
-		echo '<input type="text" id="insurance_price_key" name="insurance_price_key" value="'.esc_attr($value).'" placeholder="'.$placeholder.'" size="50%"><br><br>';
+		echo '<input type="text" id="'.$id.'" name="'.$id.'" value="'.esc_attr($value).'" placeholder="'.$placeholder.'" size="50%"><br><br>';
 	}
 
-	private function input_select($id, $name, array $values, $input_key){
+	private function input_textarea($id, $name, $value){
+		echo '<label for="'.$id.'">'.$name.' : </label>';
+		echo '<textarea id="'.$id.'" name="'.$id.'" rows="2" cols="50">'.esc_attr($value).'</textarea><br><br>';
+	}
+
+	private function input_select($id, $name, $selected, array $values){
 		echo '<label for="'.$id.'">'.$name.' : </label>';
 		echo '<select name="'.$id.'">';
 			foreach($values as $key => $value){
-				echo '<option value="'.$key.'" '.selected( "$key", $input_key, false ).'>'.$value.'</option>';
-				var_dump($input_key);
+				echo '<option value="'.$key.'" '.selected( "$key", $selected, false ).'>'.$value.'</option>';
 			}
 		echo '</select><br><br>';
 	}

@@ -98,7 +98,7 @@ class Insurance_Cpt{
 		if ( ! wp_verify_nonce($_POST['insurance_details_meta_box_nonce'], 'insurance_save_options_data') ) return;
 		if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) return;
 		if ( ! current_user_can( 'edit_post', $post_id )) return;
-		if (! isset($_POST['insurance_batch_key']) || ! isset($_POST['insurance_price_key']) || ! isset($_POST['insurance_price_info_key']) || ! isset($_POST['insurance_month_key']) || ! isset($_POST['insurance_rating_key']) || ! isset($_POST['insurance_complete_btn_key']) || ! isset($_POST['insurance_quote_btn_key']) ) {
+		if (! isset($_POST['insurance_batch_key']) || ! isset($_POST['insurance_price_key']) || ! isset($_POST['insurance_price_info_key']) || ! isset($_POST['insurance_month_key']) || ! isset($_POST['insurance_rating_key'])) {
 			return;
 		}
 

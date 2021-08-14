@@ -10,74 +10,14 @@ defined( 'ABSPATH' ) || exit;
  * @since 1.0.0
  */
 class Insurance_Shortcode_Cpt{
-  /**
-    * instance The Insurance ShortCode cpt.
-    *
-    * @since 1.0.0
-    * @access public
-    *
-    * @var Plugin
- */
+
   public $instance = null;
-
-  /**
-    * Load the Callback Class.
-    *
-    * @since 1.0.0
-    * @access public
-    *
-    * @var Plugin
-  */
   public $shortcode_callback;
-
-  /**
-    * Initiate Shortcode.
-    *
-    * @since 1.0.0
-    * @access public
-    *
-    * @var Plugin
-  */
   public $get_shortcode = [];
-
-	/**
-    * Initiate all the option name.
-    *
-    * @since 1.0.0
-    * @access public
-    *
-    * @var Plugin
-  */
   public $shortcode_key = [];
-
-	/**
-    * Initiate Supporter Info.
-    *
-    * @since 1.0.0
-    * @access public
-    *
-    * @var Plugin
-  */
   public $supporter_key = [];
-
-	/**
-    * Initiate Supporter Info.
-    *
-    * @since 1.0.0
-    * @access public
-    *
-    * @var Plugin
-  */
   public $award_key = [];
 
-	/**
-    * Constructor Function.
-    *
-    * @since 1.0.0
-    * @access public
-    *
-    * @var Plugin
-  */
 	function __construct() {
 		$this->shortcode_callback = new \Angfuz_Ins\Ins_Cpt\Callbacks\Shortcode();
 
@@ -90,16 +30,16 @@ class Insurance_Shortcode_Cpt{
 		$this->shortcode_key = [
 			'_insurance_categoryone_key' 					=> sanitize_text_field( $_POST['insurance_categoryone_key']),
 			'_insurance_categoryone_number_key' 	=> sanitize_text_field( $_POST['insurance_categoryone_number_key']),
-			'_insurance_categoryone_note_key' 		=> sanitize_text_field( $_POST['_insurance_categoryone_note_key']),
+			'_insurance_categoryone_note_key' 		=> sanitize_text_field( $_POST['insurance_categoryone_note_key']),
 			'_insurance_categorytwo_key' 					=> sanitize_text_field( $_POST['insurance_categorytwo_key']),
 			'_insurance_categorytwo_number_key' 	=> sanitize_text_field( $_POST['insurance_categorytwo_number_key']),
-			'_insurance_categorytwo_note_key' 	=> sanitize_text_field( $_POST['insurance_categorytwo_note_key']),
+			'_insurance_categorytwo_note_key' 		=> sanitize_text_field( $_POST['insurance_categorytwo_note_key']),
 			'_insurance_categorythree_key' 				=> sanitize_text_field( $_POST['insurance_categorythree_key']),
 			'_insurance_categorythree_number_key' => sanitize_text_field( $_POST['insurance_categorythree_number_key']),
-			'_insurance_categorythree_note_key' => sanitize_text_field( $_POST['insurance_categorythree_note_key']),
+			'_insurance_categorythree_note_key' 	=> sanitize_text_field( $_POST['insurance_categorythree_note_key']),
 			'_insurance_categoryfour_key' 				=> sanitize_text_field( $_POST['insurance_categoryfour_key']),
 			'_insurance_categoryfour_number_key' 	=> sanitize_text_field( $_POST['insurance_categoryfour_number_key']),
-			'_insurance_categoryfour_note_key' 	=> sanitize_text_field( $_POST['insurance_categoryfour_note_key']),
+			'_insurance_categoryfour_note_key' 		=> sanitize_text_field( $_POST['insurance_categoryfour_note_key']),
 		];
 
 		// Supporter Key
