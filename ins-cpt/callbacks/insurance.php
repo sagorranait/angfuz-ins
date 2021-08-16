@@ -14,11 +14,14 @@ class Insurance{
   public function insurance_input_callbacks( $post ) {
 		wp_nonce_field( 'insurance_save_options_data', 'insurance_details_meta_box_nonce' );
 
+		$batch_text	= get_post_meta( $post->ID, '_insurance_batch_text_key', true );
 		$batch 			= get_post_meta( $post->ID, '_insurance_batch_key', true );
 		$price 			= get_post_meta( $post->ID, '_insurance_price_key', true );
 		$price_info = get_post_meta( $post->ID, '_insurance_price_info_key', true );
 		$month 			= get_post_meta( $post->ID, '_insurance_month_key', true );
 		$rating 		= get_post_meta( $post->ID, '_insurance_rating_key', true );
+
+		$this->input_text('insurance_batch_text_key', 'Batch Text', $batch_text, 'Enter Your Batch Text');
 
 		$this->input_select('insurance_batch_key', 'Insurance Batch', $batch, 
 			[

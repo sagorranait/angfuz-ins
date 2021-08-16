@@ -73,7 +73,7 @@ class Shortcode{
 
 		$this->input_button('insurance_support_image_key', 'supporter_image', $supporter_image, 'Upload Support Image');
 		$this->input_text('insurance_support_title_key', 'Title', $supporter_title, 'Enter Your Title');
-		$this->input_number('insurance_support_number_key', 'Telephone', $supporter_number, 'Enter Supporter Number');
+		$this->input_text('insurance_support_number_key', 'Telephone', $supporter_number, 'Enter Supporter Number');
 		$this->input_email('insurance_support_gamil_key', 'Email', $supporter_gmail, 'Enter Support Email Name');
 		$this->input_text('insurance_support_button_key', 'Button Text', $supporter_button, 'Contact Us');
 	}
@@ -92,9 +92,9 @@ class Shortcode{
 		$this->input_button('insurance_award_image_key', 'award_image', $award_image, 'Upload Award Image');
 		$this->input_text('insurance_award_title_key', 'Award Title', $award_title, 'Enter Your Title');
 		$this->input_text('insurance_award_description_key', 'Award For', $award_description, 'Best comparison portal 2020');
-		$this->input_number('insurance_award_voted_key', 'Customers Voted', $award_voted, 'Enter customers voted');
+		$this->input_text('insurance_award_voted_key', 'Customers Voted', $award_voted, 'Enter customers voted');
 		$this->input_button('insurance_award_company_logo_key', 'company_logo', $company_logo, 'Upload Company Logo');
-		$this->input_text('insurance_award_company_description_key', 'Telephone', $company_description, 'Enter Company Description');
+		$this->input_textarea('insurance_award_company_description_key', 'Description', $company_description);
 		$this->input_select('insurance_award_company_rating_key', 'Rating', $company_rating, 
 			[
 				'1' => '1 ⭐',

@@ -20,6 +20,7 @@ class Insurance_Cpt{
 
 		// All Option key
 		$this->insurance_key = [
+			'_insurance_batch_text_key' 	=> sanitize_text_field( $_POST['insurance_batch_text_key']),
 			'_insurance_batch_key' 				=> sanitize_text_field( $_POST['insurance_batch_key']),
 			'_insurance_price_key' 				=> sanitize_text_field( $_POST['insurance_price_key']),
 			'_insurance_price_info_key' 	=> sanitize_text_field( $_POST['insurance_price_info_key']),
