@@ -126,8 +126,8 @@ class Insurance_Shortcode_Cpt{
 	}
 
 	public function insurance_shortcode_meta_box() {
-		add_meta_box( 'short_code', 'Category Settings', [ $this->shortcode_callback, 'shortcode_category_callbacks' ], 'shortcode-cpt' );
 		add_meta_box( 'get_shortcode', 'Your Shortcode', [ $this->shortcode_callback, 'insurance_get_shortcode' ], 'shortcode-cpt' );
+		add_meta_box( 'short_code', 'Block Settings', [ $this->shortcode_callback, 'shortcode_category_callbacks' ], 'shortcode-cpt' );
 		add_meta_box( 'insurance_support', 'Supporter Info', [ $this->shortcode_callback, 'insurance_supporter_info' ], 'shortcode-cpt', 'side');
 		add_meta_box( 'insurance_award', 'Award Info', [ $this->shortcode_callback, 'insurance_award_info' ], 'shortcode-cpt', 'side');
 	}

@@ -56,6 +56,7 @@ class Enqueue{
   public function ins_enqueue_frontend_scripts() {
 	  wp_enqueue_style( 'angfuzins-bootstrap', \Angfuz_Ins::plugin_url().'assets/css/bootstrap.min.css', [], \Angfuz_Ins::version(), 'all');
     wp_enqueue_style( 'angfuzins-fontawesome', \Angfuz_Ins::plugin_url().'assets/css/font-awesome.min.css', [], \Angfuz_Ins::version(), 'all');
+    wp_enqueue_style( 'angfuzins-style', \Angfuz_Ins::plugin_url().'assets/css/style.css', [], \Angfuz_Ins::version(), 'all');
     wp_enqueue_script( 'angfuzins-bootstrapjs', \Angfuz_Ins::plugin_url().'assets/js/bootstrap.min.js', ['jquery']);
   }
 }
