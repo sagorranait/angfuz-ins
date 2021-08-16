@@ -72,6 +72,8 @@ class Insurance_Shortcode_Cpt{
   public function register() {
 		if (is_null($this->instance)) {
 			add_action( 'init', [$this, 'angfuzins_insurance_shortcode_cpt']);
+			add_filter('manage_shortcode-cpt_posts_columns', [ $this, 'insurance_shortcode_column' ]);
+			add_action( 'manage_shortcode-cpt_posts_custom_column', [ $this, 'insurance_shortcode_custom_column'], 10, 2 );
 		}
 
 		// Meta Box Action
@@ -123,6 +125,25 @@ class Insurance_Shortcode_Cpt{
 		];
 
 		register_post_type('shortcode-cpt', $args); // Register Meta box
+	}
+
+	public function insurance_shortcode_column( $columns ){
+		$SC_column = array();
+		$SC_column['title'] = 'Title';
+		$SC_column['codes'] = 'ShortCode';
+ 		$SC_column['date'] = 'Date';
+		return $SC_column;
+	}
+
+	public function insurance_shortcode_custom_column( $column, $post_id ){
+	
+		switch( $column ){
+			case 'codes' :
+				//code column
+				$code = get_post_meta( $post_id, '_insurance_shortcode_key', true );
+				echo '<textarea onfocus="this.select();" class="regular-text" name="option_shortcode_value_key" rows="1" cols="50" readonly>'.$code.'</textarea>';
+				break;
+		}
 	}
 
 	public function insurance_shortcode_meta_box() {

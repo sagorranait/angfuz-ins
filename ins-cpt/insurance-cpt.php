@@ -32,6 +32,8 @@ class Insurance_Cpt{
   public function register() {
 		if (is_null($this->instance)) {
 			add_action( 'init', [$this, 'angfuzins_insurance_cpt']);
+			add_filter('manage_angfuzins-insurance_posts_columns', [ $this, 'insurance_column' ]);
+			add_action( 'manage_angfuzins-insurance_posts_custom_column', [ $this, 'insurance_custom_column'], 10, 2 );
 		}
 		add_action( 'add_meta_boxes', [ $this, 'insurance_details_meta_box' ]);
 		add_action( 'save_post', [ $this, 'insurance_save_options_data' ]);
@@ -87,6 +89,40 @@ class Insurance_Cpt{
 		];
 
 		register_post_type('angfuzins-insurance', $args); // Register Meta box
+	}
+
+	public function insurance_column( $columns ){
+		$SC_column = array();
+		$SC_column['price'] = 'Insurance Price';
+		$SC_column['inscategory'] = 'Categories';
+		$SC_column['insaccoummodations'] = 'Accoummodations';
+		$SC_column['inscontributions'] = 'Contributions';
+		$SC_column['insdate'] = '	Insurance Dates';
+ 		$SC_column['date'] = 'Date';
+		return $SC_column;
+	}
+
+	function insurance_custom_column( $column, $post_id ){
+	
+		switch( $column ){
+			case 'price' :
+				//code column
+				$price = get_post_meta( $post_id, '_insurance_price_key', true );
+				echo '<h3>€ '.$price.'</h3>';
+			break;
+			case "inscategory":  
+				echo $cat = strip_tags(get_the_term_list($post_id->ID, 'inscategory', '', ', ',''));  
+			break;
+			case "insaccoummodations":  
+				echo $cat = strip_tags(get_the_term_list($post_id->ID, 'insaccoummodations', '', ', ',''));  
+			break;
+			case "inscontributions":  
+				echo $cat = strip_tags(get_the_term_list($post_id->ID, 'inscontributions', '', ', ',''));  
+			break;
+			case "insdate":  
+				echo $cat = strip_tags(get_the_term_list($post_id->ID, 'insdate', '', ', ',''));  
+			break;
+		}
 	}
 
 	public function insurance_details_meta_box() {
