@@ -111,16 +111,16 @@ class Insurance_Cpt{
 				echo '<h3>€ '.$price.'</h3>';
 			break;
 			case "inscategory":  
-				echo $cat = strip_tags(get_the_term_list($post_id->ID, 'inscategory', '', ', ',''));  
+				echo strip_tags(get_the_term_list($post_id->ID, 'inscategory', '', ', ', ''));  
 			break;
 			case "insaccoummodations":  
-				echo $cat = strip_tags(get_the_term_list($post_id->ID, 'insaccoummodations', '', ', ',''));  
+				echo strip_tags(get_the_term_list($post_id->ID, 'insaccoummodations'));  
 			break;
 			case "inscontributions":  
-				echo $cat = strip_tags(get_the_term_list($post_id->ID, 'inscontributions', '', ', ',''));  
+				echo strip_tags(get_the_term_list($post_id->ID, 'inscontributions'));  
 			break;
 			case "insdate":  
-				echo $cat = strip_tags(get_the_term_list($post_id->ID, 'insdate', '', ', ',''));  
+				echo strip_tags(get_the_term_list($post_id->ID, 'insdate'));  
 			break;
 		}
 	}

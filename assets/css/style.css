@@ -101,6 +101,10 @@ select.vs-bar-select {
   padding: 0;
 }
 
+select.vs-bar-select:focus {
+  outline: none;
+}
+
 /* 02. Service Style */
 .info-icon {
   display: inline-block;
@@ -364,6 +368,10 @@ select.vs-bar-select {
   cursor: pointer;
 }
 
+.sidebox-wrap select:focus {
+  outline: none;
+}
+
 .sidebox-wrap select:hover,
 .sidebox-wrap select:focus {
   border: 1px solid #ccc;
@@ -564,6 +572,7 @@ select.vs-bar-select {
   line-height: 48px;
   color: #000000;
   text-align: center;
+  text-decoration: none !important;
 }
 
 .vs-pagination a.active,

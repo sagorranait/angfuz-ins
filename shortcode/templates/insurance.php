@@ -1,74 +1,92 @@
 <?php
+defined( 'ABSPATH' ) || exit;
 
-
-
+/**
+ * Angfuz_Ins - Enqueue Class.
+ * Initiate all the shortcode info.
+ *
+ * @since 1.0.0
+ */
 ?>
 <section class="vs-service-wrapper py-5">
 <div class="container">
   <div class="row no-gutters">
     <div class="col-lg-3">
-      <h2 class="vs-bar-title">Leistungen wählen</h2>
+      <h2 class="vs-bar-title"><?php echo $attr['title']; ?></h2>
       <div class="sidebox-wrap">
-        <h3 class="sidebox-title">Chefarzt & Co. <i class="fa fa-info info-icon mt-1"></i></h3>
-        <div class="sidebox-check">
-          <input type="checkbox" id="check1">
-          <label for="check1">Chefarzt & Spezialisten <i class="fa fa-question modal-toggler" data-modal="#modal-no1" aria-hidden="true"></i></label>
-        </div>
-        <div class="sidebox-check">
-          <input type="checkbox" id="check2">
-          <label for="check2">Honorar über Höchtsatz <i class="fa fa-question" aria-hidden="true"></i></label>
-        </div>
-        <div class="sidebox-check">
-          <input type="checkbox" id="check3">
-          <label for="check3">Ambulante Operation <i class="fa fa-question" aria-hidden="true"></i></label>
-        </div>
-        <div class="sidebox-check">
-          <input type="checkbox" id="check4">
-          <label for="check4">Belegarztbehandlung <i class="fa fa-question" aria-hidden="true"></i></label>
-        </div>
+        <h3 class="sidebox-title">Chief Physician & Co.<i class="fa fa-info info-icon mt-1"></i></h3>
+        <?php
+          $args = array(
+            'taxonomy' => 'inscategory',
+            'hide_empty' => false,
+          );
+          $blockone = get_categories($args);
+          foreach($blockone as $block){
+            echo '<div class="sidebox-check"><input type="checkbox" id="'.$block->term_id.'">
+            <label for="'.$block->term_id.'">'.$block->name.' <i class="fa fa-question modal-toggler" data-modal="#modal-no1" aria-hidden="true"></i></label></div>';
+          }
+        ?>
       </div>
       <div class="sidebox-wrap">
-        <h3 class="sidebox-title">Unterbringung <i class="fa fa-info info-icon mt-1"></i></h3>
+        <h3 class="sidebox-title">Accommodation <i class="fa fa-info info-icon mt-1"></i></h3>
         <div class="select-inline">
           <div>
             <select>
-              <option value="1">1 Bett</option>
-              <option value="2">2 Bett</option>
+            <?php
+              $args = array(
+                'taxonomy' => 'insaccoummodations',
+                'hide_empty' => false,
+              );
+              $blocktwo = get_categories($args);
+              foreach($blocktwo as $block){
+                echo '<option value="'.$block->term_id.'">'.$block->name.'</option>';
+              }
+            ?>
             </select>
           </div>
           <div>
-            <span class="small">Zimmer</span>
+            <span class="small">room</span>
           </div>
         </div>
         <div class="sidebox-check">
           <input type="checkbox" id="check5">
-          <label for="check5">Freie Krankenhauswahl <i class="fa fa-question" aria-hidden="true"></i></label>
+          <label for="check5">Free choice of hospital <i class="fa fa-question" aria-hidden="true"></i></label>
         </div>
       </div>
       <div class="sidebox-wrap">
-        <h3 class="sidebox-title">Beitragsentwicklung <i class="fa fa-info info-icon mt-1"></i></h3>
+        <h3 class="sidebox-title">Contribution development <i class="fa fa-info info-icon mt-1"></i></h3>
         <select>
-          <option value="Günstig">Günstig, steigender Beitrag</option>
-          <option selected="" value="Im Alter konstant">Im Alter konstanter Beitrag</option>
-          <option value="Sofort konstant">Sofort konstanter Beitrag</option>
+          <?php
+            $args = array(
+              'taxonomy' => 'inscontributions',
+              'hide_empty' => false,
+            );
+            $blockthree = get_categories($args);
+            foreach($blockthree as $block){
+              echo '<option value="'.$block->name.'">'.$block->name.'</option>';
+            }
+          ?>
         </select>
       </div>
       <div class="sidebox-wrap">
-        <h3 class="sidebox-title">Versicherungsbeginn <i class="fa fa-info info-icon mt-1"></i></h3>
+        <h3 class="sidebox-title">Start of insurance <i class="fa fa-info info-icon mt-1"></i></h3>
         <div class="select-inline">
           <div>
             <select>
-              <option selected="" value="1609459200">1. Jan. 2021</option>
-              <option value="1612137600">1. Feb. 2021</option>
-              <option value="1614556800">1. März 2021</option>
-              <option value="1617235200">1. Apr. 2021</option>
-              <option value="1619827200">1. Mai 2021</option>
-              <option value="1622505600">1. Juni 2021</option>
-              <option value="1625097600">1. Juli 2021</option>
+              <?php
+                $args = array(
+                  'taxonomy' => 'insdate',
+                  'hide_empty' => false,
+                );
+                $blockfour = get_categories($args);
+                foreach($blockfour as $block){
+                  echo '<option value="'.$block->term_id.'">'.$block->name.'</option>';
+                }
+              ?>
             </select>
           </div>
           <div>
-            <span class="small">Beginn</span>
+            <span class="small">Beginning</span>
           </div>
         </div>
       </div>
@@ -118,359 +136,85 @@
     <div class="col-lg-9">
       <div class="row no-gutters justify-content-between">
         <div class="col-md-8">
-          <h2 class="vs-bar-title">Ihre persönliche Empfehlung</h2>
+          <h2 class="vs-bar-title">Your personal recommendation</h2>
         </div>
         <div class="col-md-4">
           <div class="vs-select-wrap">
             <select size="1" class="vs-bar-select w-100">
-              <option selected="" value="costBenefit">Preis / Leistung</option>
-              <option value="cost">Preis</option>
-              <option value="averageCost">Ø Preis</option>
-              <option value="averageCostBenefit">Ø Preis / Leistung</option>
-              <option value="benefit">Leistung</option>
-              <option value="financeTest">Testurteil</option>
+              <option selected="" value="costBenefit">Default sorting</option>
+              <option value="cost">Sort by average rating</option>
+              <option value="averageCost">Sort by latest</option>
+              <option value="averageCostBenefit">Sort by price: low to high</option>
+              <option value="benefit">Sort by price: high to low</option>
             </select>
           </div>
         </div>
       </div>          
       <div class="vs-service-area vs-service-style1">
+        <?php
+          $insurances = get_posts([
+            'post_type' => 'angfuzins-insurance',
+            'post_status' => 'publish',
+            'posts_per_page' => -1
+          ]);
+          if ($insurances) {
+            foreach($insurances as $insurance){
+              $batch_text	= get_post_meta( $insurance->ID, '_insurance_batch_text_key', true );
+              $batch 			= get_post_meta( $insurance->ID, '_insurance_batch_key', true );
+              $price 			= get_post_meta( $insurance->ID, '_insurance_price_key', true );
+              $month 			= get_post_meta( $insurance->ID, '_insurance_month_key', true );
+              $price_info = get_post_meta( $insurance->ID, '_insurance_price_info_key', true );
+              $rating 		= get_post_meta( $insurance->ID, '_insurance_rating_key', true );
 
-        <div class="vs-service">
-          <div class="vs-service-top">
-            <span class="top-title">Preis-Leistungs-Sieger</span>
-          </div>
-          <div class="vs-service-content">
-            <div class="content-left">
-              <img src="https://i.ibb.co/b62Hsc9/Asset-1.png" alt="Service Image">
-              <p class="small mb-0">Komfort 2-Bett <i class="fa fa-info info-icon mt-1"></i></p>
-              <span class="small mt-1 d-inline-block d-lg-none">ACIO Rating</span>
-              <div class="rating mb-2 d-block d-lg-none">
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-              </div>
-            </div>
-            <div class="content-middle">
-              <div class="middle-left">
-                <div class="price-area">
-                  <span class="price">15,75 €</span>
-                  <sub>mtl</sub>
-                  <i class="fa fa-info info-icon mt-1"></i>
+              echo '<div class="vs-service">
+                <div class="vs-service-top">
+                  <span class="top-title '.$batch.'">'.$batch_text.'</span>
                 </div>
-              </div>
-              <div class="middle-right">
-                <span class="small d-lg-inline-block d-none">ACIO Rating</span>
-                <div class="rating mb-2 d-lg-block d-none">
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
+                <div class="vs-service-content">
+                  <div class="content-left">
+                    <img src="https://i.ibb.co/b62Hsc9/Asset-1.png" alt="Service Image">
+                    <p class="small mb-0">Comfort 2 bed <i class="fa fa-info info-icon mt-1"></i></p>
+                  </div>
+                  <div class="content-middle">
+                    <div class="middle-left">
+                      <div class="price-area">
+                        <span class="price">€'.$price.'</span>
+                        <sub>/ '.$month.'</sub>
+                        <i class="fa fa-info info-icon mt-1"></i>
+                      </div>
+                    </div>
+                    <div class="middle-right">
+                      <span class="small d-lg-inline-block d-none">ACIO rating</span>
+                      <div class="rating mb-2 d-lg-block d-none">';
+                        for ($i=0; $i <$rating; $i++) { 
+                          echo '<i class="fa fa-star" aria-hidden="true"></i> ';
+                        }
+                      echo '</div>
+                      <ul class="list-service">
+                        <li><a href="#"><i class="plus-icon">+</i> Chefarztbehandlung</a></li>
+                        <li><a href="#"><i class="plus-icon">+</i> Honorar ohne Begrenzung</a></li>
+                        <li><a href="#"><i class="plus-icon">+</i> Ambulante OP</a></li>
+                      </ul>
+                      <span class="label-small">Beltrag</span>
+                      <span class="small text-gray">Im Alter konstant</span>
+                    </div>
+                  </div>
+                  <div class="content-right">
+                    <a href="#" class="vs-btn">Complete online</a>
+                    <a href="#" class="vs-btn style-outline">Request a quote</a>
+                  </div>
                 </div>
-                <ul class="list-service">
-                  <li><a href="#"><i class="plus-icon">+</i> Chefarztbehandlung</a></li>
-                  <li><a href="#"><i class="plus-icon">+</i> Honorar ohne Begrenzung</a></li>
-                  <li><a href="#"><i class="plus-icon">+</i> Ambulante OP</a></li>
-                </ul>
-                <span class="label-small">Beltrag</span>
-                <span class="small text-gray">Im Alter konstant</span>
-              </div>
-            </div>
-            <div class="content-right">
-              <a href="#" class="vs-btn">Online abschließen</a>
-              <a href="#" class="vs-btn style-outline">Angebot anfordern</a>
-            </div>
-          </div>
-          <div class="service-footer">
-            <div class="checkbox">
-              <input type="checkbox" id="serviceCheck1">
-              <label for="serviceCheck1" class="small">Tarif vergleichen</label>
-            </div>
-          </div>            
-        </div>    
-
-        <div class="vs-service">
-          <div class="vs-service-top">
-            <span class="top-title">Preis-Leistungs-Sieger</span>
-          </div>
-          <div class="vs-service-content">
-            <div class="content-left">
-              <img src="https://i.ibb.co/pnzgVYq/Asset-2.png" alt="Service Image">
-              <p class="small mb-0">MEGA. ClinicRi <i class="fa fa-info info-icon mt-1"></i></p>
-              <span class="small mt-1 d-inline-block d-lg-none">ACIO Rating</span>
-              <div class="rating mb-2 d-block d-lg-none">
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-              </div>
-            </div>
-            <div class="content-middle">
-              <div class="middle-left">
-                <div class="price-area">
-                  <span class="price">15,75 €</span>
-                  <sub>mtl</sub>
-                  <i class="fa fa-info info-icon mt-1"></i>
-                </div>
-              </div>
-              <div class="middle-right">
-                <span class="small d-lg-inline-block d-none">ACIO Rating</span>
-                <div class="rating mb-2 d-lg-block d-none">
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                </div>
-                <ul class="list-service">
-                  <li><a href="#"><i class="plus-icon">+</i> Chefarztbehandlung</a></li>
-                  <li><a href="#"><i class="plus-icon">+</i> Honorar ohne Begrenzung</a></li>
-                  <li><a href="#"><i class="plus-icon">+</i> Ambulante OP</a></li>
-                </ul>
-                <span class="label-small">Beltrag</span>
-                <span class="small text-gray">Im Alter konstant</span>
-              </div>
-            </div>
-            <div class="content-right">
-              <a href="#" class="vs-btn">Online abschließen</a>
-              <a href="#" class="vs-btn style-outline">Angebot anfordern</a>
-            </div>
-          </div>
-          <div class="service-footer">
-            <div class="checkbox">
-              <input type="checkbox" id="serviceCheck2">
-              <label for="serviceCheck2" class="small">Tarif vergleichen</label>
-            </div>
-          </div>            
-        </div>    
-
-        <div class="vs-service">
-          <div class="vs-service-top">
-            <span class="top-title">Preis-Leistungs-Sieger</span>
-          </div>
-          <div class="vs-service-content">
-            <div class="content-left">
-              <img src="https://i.ibb.co/gPmSgMJ/Asset-3.png" alt="Service Image">
-              <p class="small mb-0">SG2 R/L <i class="fa fa-info info-icon mt-1"></i></p>
-              <span class="small mt-1 d-inline-block d-lg-none">ACIO Rating</span>
-              <div class="rating mb-2 d-block d-lg-none">
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-              </div>
-            </div>
-            <div class="content-middle">
-              <div class="middle-left">
-                <div class="price-area">
-                  <span class="price">15,75 €</span>
-                  <sub>mtl</sub>
-                  <i class="fa fa-info info-icon mt-1"></i>
-                </div>
-              </div>
-              <div class="middle-right">
-                <span class="small d-lg-inline-block d-none">ACIO Rating</span>
-                <div class="rating mb-2 d-lg-block d-none">
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                </div>
-                <ul class="list-service">
-                  <li><a href="#"><i class="plus-icon">+</i> Chefarztbehandlung</a></li>
-                  <li><a href="#"><i class="plus-icon">+</i> Honorar ohne Begrenzung</a></li>
-                  <li><a href="#"><i class="plus-icon">+</i> Ambulante OP</a></li>
-                </ul>
-                <span class="label-small">Beltrag</span>
-                <span class="small text-gray">Im Alter konstant</span>
-              </div>
-            </div>
-            <div class="content-right">
-              <a href="#" class="vs-btn">Online abschließen</a>
-              <a href="#" class="vs-btn style-outline">Angebot anfordern</a>
-            </div>
-          </div>
-          <div class="service-footer">
-            <div class="checkbox">
-              <input type="checkbox" id="serviceCheck3">
-              <label for="serviceCheck3" class="small">Tarif vergleichen</label>
-            </div>
-          </div>            
-        </div>    
-
-        <div class="vs-service">
-          <div class="vs-service-top">
-            <span class="top-title">Preis-Leistungs-Sieger</span>
-          </div>
-          <div class="vs-service-content">
-            <div class="content-left">
-              <img src="https://i.ibb.co/nrrCxyn/Asset-4.png" alt="Service Image">
-              <p class="small mb-0">Komfort Start-U <i class="fa fa-info info-icon mt-1"></i></p>
-              <span class="small mt-1 d-inline-block d-lg-none">ACIO Rating</span>
-              <div class="rating mb-2 d-block d-lg-none">
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-              </div>
-            </div>
-            <div class="content-middle">
-              <div class="middle-left">
-                <div class="price-area">
-                  <span class="price">15,75 €</span>
-                  <sub>mtl</sub>
-                  <i class="fa fa-info info-icon mt-1"></i>
-                </div>
-              </div>
-              <div class="middle-right">
-                <span class="small d-lg-inline-block d-none">ACIO Rating</span>
-                <div class="rating mb-2 d-lg-block d-none">
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                </div>
-                <ul class="list-service">
-                  <li><a href="#"><i class="plus-icon">+</i> Chefarztbehandlung</a></li>
-                  <li><a href="#"><i class="plus-icon">+</i> Honorar ohne Begrenzung</a></li>
-                  <li><a href="#"><i class="plus-icon">+</i> Ambulante OP</a></li>
-                </ul>
-                <span class="label-small">Beltrag</span>
-                <span class="small text-gray">Im Alter konstant</span>
-              </div>
-            </div>
-            <div class="content-right">
-              <a href="#" class="vs-btn">Online abschließen</a>
-              <a href="#" class="vs-btn style-outline">Angebot anfordern</a>
-            </div>
-          </div>
-          <div class="service-footer">
-            <div class="checkbox">
-              <input type="checkbox" id="serviceCheck4">
-              <label for="serviceCheck4" class="small">Tarif vergleichen</label>
-            </div>
-          </div>            
-        </div>    
-
-        <div class="vs-service">
-          <div class="vs-service-top">
-            <span class="top-title">Preis-Leistungs-Sieger</span>
-          </div>
-          <div class="vs-service-content">
-            <div class="content-left">
-              <img src="https://i.ibb.co/mXNBTKX/Asset-6.png" alt="Service Image">
-              <p class="small mb-0">SZ2 Plus <i class="fa fa-info info-icon mt-1"></i></p>
-              <span class="small mt-1 d-inline-block d-lg-none">ACIO Rating</span>
-              <div class="rating mb-2 d-block d-lg-none">
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-              </div>
-            </div>
-            <div class="content-middle">
-              <div class="middle-left">
-                <div class="price-area">
-                  <span class="price">15,75 €</span>
-                  <sub>mtl</sub>
-                  <i class="fa fa-info info-icon mt-1"></i>
-                </div>
-              </div>
-              <div class="middle-right">
-                <span class="small d-lg-inline-block d-none">ACIO Rating</span>
-                <div class="rating mb-2 d-lg-block d-none">
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                </div>
-                <ul class="list-service">
-                  <li><a href="#"><i class="plus-icon">+</i> Chefarztbehandlung</a></li>
-                  <li><a href="#"><i class="plus-icon">+</i> Honorar ohne Begrenzung</a></li>
-                  <li><a href="#"><i class="plus-icon">+</i> Ambulante OP</a></li>
-                </ul>
-                <span class="label-small">Beltrag</span>
-                <span class="small text-gray">Im Alter konstant</span>
-              </div>
-            </div>
-            <div class="content-right">
-              <a href="#" class="vs-btn">Online abschließen</a>
-              <a href="#" class="vs-btn style-outline">Angebot anfordern</a>
-            </div>
-          </div>
-          <div class="service-footer">
-            <div class="checkbox">
-              <input type="checkbox" id="serviceCheck5">
-              <label for="serviceCheck5" class="small">Tarif vergleichen</label>
-            </div>
-          </div>            
-        </div>    
-
-        <div class="vs-service">
-          <div class="vs-service-top">
-            <span class="top-title">Preis-Leistungs-Sieger</span>
-          </div>
-          <div class="vs-service-content">
-            <div class="content-left">
-              <img src="https://i.ibb.co/mXNBTKX/Asset-6.png" alt="Service Image">
-              <p class="small mb-0">MediClinic Plus<i class="fa fa-info info-icon mt-1"></i></p>
-              <span class="small mt-1 d-inline-block d-lg-none">ACIO Rating</span>
-              <div class="rating mb-2 d-block d-lg-none">
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-              </div>
-            </div>
-            <div class="content-middle">
-              <div class="middle-left">
-                <div class="price-area">
-                  <span class="price">15,75 €</span>
-                  <sub>mtl</sub>
-                  <i class="fa fa-info info-icon mt-1"></i>
-                </div>
-              </div>
-              <div class="middle-right">
-                <span class="small d-lg-inline-block d-none">ACIO Rating</span>
-                <div class="rating mb-2 d-lg-block d-none">
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                  <i class="fa fa-star" aria-hidden="true"></i>
-                </div>
-                <ul class="list-service">
-                  <li><a href="#"><i class="plus-icon">+</i> Chefarztbehandlung</a></li>
-                  <li><a href="#"><i class="plus-icon">+</i> Honorar ohne Begrenzung</a></li>
-                  <li><a href="#"><i class="plus-icon">+</i> Ambulante OP</a></li>
-                </ul>
-                <span class="label-small">Beltrag</span>
-                <span class="small text-gray">Im Alter konstant</span>
-              </div>
-            </div>
-            <div class="content-right">
-              <a href="#" class="vs-btn">Online abschließen</a>
-              <a href="#" class="vs-btn style-outline">Angebot anfordern</a>
-            </div>
-          </div>
-          <div class="service-footer">
-            <div class="checkbox">
-              <input type="checkbox" id="serviceCheck6">
-              <label for="serviceCheck6" class="small">Tarif vergleichen</label>
-            </div>
-          </div>            
-        </div>    
-               
+                <div class="service-footer">
+                  <div class="checkbox">
+                    <input type="checkbox" id="serviceCheck1">
+                    <label for="serviceCheck1" class="small">Tarif vergleichen</label>
+                  </div>
+                </div>            
+              </div>';
+            }
+            wp_reset_postdata();
+          }
+        ?>               
         <ul class="vs-pagination text-center">
           <li><a href="#">01</a></li>
           <li><a href="#">02</a></li>
