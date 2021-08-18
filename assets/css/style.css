@@ -228,6 +228,7 @@ select.vs-bar-select:focus {
   max-width: 48%;
   flex: 0 0 50%;
   margin-right: 7px;
+  padding-left: 10px;
 }
 
 .vs-service-style1 .middle-right {
@@ -409,6 +410,7 @@ select.vs-bar-select:focus {
   font-weight: 700;
   display: inline-block;
   margin-bottom: 10px;
+  text-decoration: none;
 }
 
 .sidebox-wrap .author-link-btn {
@@ -417,6 +419,7 @@ select.vs-bar-select:focus {
   border: 1px solid #b4c4d4;
   padding: 8.5px 40px;
   margin-bottom: 15px;
+  text-decoration: none !important;
 }
 
 .sidebox-wrap .author-link-btn:hover {
@@ -630,6 +633,13 @@ select.vs-bar-select:focus {
 
 .vs-modal-wrap .vs-modal-body {
   padding: 20px;
+}
+
+.company_rating i {
+  color: #ffc400;
+  line-height: 1;
+  font-size: 25px;
+  padding: 6px 0px 0px 4px;
 }
 
 @media (max-width: 992px) {
