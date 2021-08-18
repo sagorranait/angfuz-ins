@@ -227,7 +227,7 @@ select.vs-bar-select:focus {
   width: 100%;
   max-width: 48%;
   flex: 0 0 50%;
-  margin-right: 15px;
+  margin-right: 7px;
 }
 
 .vs-service-style1 .middle-right {

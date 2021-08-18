@@ -173,7 +173,7 @@ defined( 'ABSPATH' ) || exit;
                 <div class="vs-service-content">
                   <div class="content-left">
                     <img src="https://i.ibb.co/b62Hsc9/Asset-1.png" alt="Service Image">
-                    <p class="small mb-0">Comfort 2 bed <i class="fa fa-info info-icon mt-1"></i></p>
+                    <p class="small mb-0">Comfort '.strip_tags(get_the_term_list($insurance->ID, 'insaccoummodations')).' <i class="fa fa-info info-icon mt-1"></i></p>
                   </div>
                   <div class="content-middle">
                     <div class="middle-left">
@@ -189,14 +189,15 @@ defined( 'ABSPATH' ) || exit;
                         for ($i=0; $i <$rating; $i++) { 
                           echo '<i class="fa fa-star" aria-hidden="true"></i> ';
                         }
-                      echo '</div>
-                      <ul class="list-service">
-                        <li><a href="#"><i class="plus-icon">+</i> Chefarztbehandlung</a></li>
-                        <li><a href="#"><i class="plus-icon">+</i> Honorar ohne Begrenzung</a></li>
-                        <li><a href="#"><i class="plus-icon">+</i> Ambulante OP</a></li>
-                      </ul>
+                      echo '</div><ul class="list-service">';
+                        $cat = '<li><a href="#">'.strip_tags(get_the_term_list($insurance->ID, 'inscategory', '<i class="plus-icon">+</i> ', ' <i class="plus-icon">+</i> ', '')).'</a></li>';
+                        echo $cat;
+                        // <li><a href="#"><i class="plus-icon">+</i> Chefarztbehandlung</a></li>
+                        // <li><a href="#"><i class="plus-icon">+</i> Honorar ohne Begrenzung</a></li>
+                        // <li><a href="#"><i class="plus-icon">+</i> Ambulante OP</a></li>
+                      echo '</ul>
                       <span class="label-small">Beltrag</span>
-                      <span class="small text-gray">Im Alter konstant</span>
+                      <span class="small text-gray">'.strip_tags(get_the_term_list($insurance->ID, 'inscontributions')).'</span>
                     </div>
                   </div>
                   <div class="content-right">
@@ -207,7 +208,7 @@ defined( 'ABSPATH' ) || exit;
                 <div class="service-footer">
                   <div class="checkbox">
                     <input type="checkbox" id="serviceCheck1">
-                    <label for="serviceCheck1" class="small">Tarif vergleichen</label>
+                    <label for="serviceCheck1" class="small">Compare tariff</label>
                   </div>
                 </div>            
               </div>';
