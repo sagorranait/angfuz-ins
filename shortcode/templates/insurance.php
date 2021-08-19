@@ -41,12 +41,11 @@ defined( 'ABSPATH' ) || exit;
             $args = array(
               'taxonomy' => 'inscategory',
               'hide_empty' => false,
-              'number' => $blockone_number,
+              'number' => $blockone_number
             );
             $blockone = get_categories($args);
             foreach($blockone as $block){
-              echo '<div class="sidebox-check"><input type="checkbox" id="'.$block->term_id.'">
-              <label for="'.$block->term_id.'">'.$block->name.' <i class="fa fa-question modal-toggler" data-modal="#modal-no1" aria-hidden="true"></i></label></div>';
+              echo '<div class="sidebox-check"><input type="checkbox" class="inscategory" id="'.$block->term_id.'" value="'.$block->term_id.'"><label for="'.$block->term_id.'">'.$block->name.' <i class="fa fa-question modal-toggler" data-modal="#modal-no1" aria-hidden="true"></i></label></div>';
             }
           ?>
         </div>
@@ -54,7 +53,7 @@ defined( 'ABSPATH' ) || exit;
           <h3 class="sidebox-title">Accommodation <i class="fa fa-info info-icon mt-1"></i></h3>
           <div class="select-inline">
             <div>
-              <select>
+              <select class="insurance-accommodation">
               <?php
                 $args = array(
                   'taxonomy' => 'insaccoummodations',
@@ -79,7 +78,7 @@ defined( 'ABSPATH' ) || exit;
         </div>
         <div class="sidebox-wrap">
           <h3 class="sidebox-title">Contribution development <i class="fa fa-info info-icon mt-1"></i></h3>
-          <select>
+          <select class="insurance-contribution">
             <?php
               $args = array(
                 'taxonomy' => 'inscontributions',
@@ -88,7 +87,7 @@ defined( 'ABSPATH' ) || exit;
               );
               $blockthree = get_categories($args);
               foreach($blockthree as $block){
-                echo '<option value="'.$block->name.'">'.$block->name.'</option>';
+                echo '<option value="'.$block->term_id.'">'.$block->name.'</option>';
               }
             ?>
           </select>
@@ -97,7 +96,7 @@ defined( 'ABSPATH' ) || exit;
           <h3 class="sidebox-title">Start of insurance <i class="fa fa-info info-icon mt-1"></i></h3>
           <div class="select-inline">
             <div>
-              <select>
+              <select class="insurance-date">
                 <?php
                   $args = array(
                     'taxonomy' => 'insdate',
@@ -188,12 +187,11 @@ defined( 'ABSPATH' ) || exit;
           </div>
           <div class="col-md-4">
             <div class="vs-select-wrap">
-              <select size="1" class="vs-bar-select w-100">
-                <option selected="" value="costBenefit">Default sorting</option>
-                <option value="cost">Sort by average rating</option>
-                <option value="averageCost">Sort by latest</option>
-                <option value="averageCostBenefit">Sort by price: low to high</option>
-                <option value="benefit">Sort by price: high to low</option>
+              <select size="1" class="vs-bar-select w-100 insurance-default-filter">
+                <option value="">Default sorting</option>
+                <option value="DESC">Sort by latest</option>
+                <option value="DESC">Sort by A to Z</option>
+                <option value="ASC">Sort by Z to A</option>
               </select>
             </div>
           </div>
