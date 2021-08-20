@@ -188,7 +188,7 @@ defined( 'ABSPATH' ) || exit;
           <div class="col-md-4">
             <div class="vs-select-wrap">
               <select size="1" class="vs-bar-select w-100 insurance-default-filter">
-                <option value="">Default sorting</option>
+                <option value="DESC">Default sorting</option>
                 <option value="DESC">Sort by latest</option>
                 <option value="DESC">Sort by A to Z</option>
                 <option value="ASC">Sort by Z to A</option>

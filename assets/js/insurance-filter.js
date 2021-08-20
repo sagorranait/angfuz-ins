@@ -9,17 +9,17 @@
       let contribution = $('.insurance-contribution').find("option:selected").val();
       let insuranceDate = $('.insurance-date').find("option:selected").val();
 
-      const data = [inscategory, orderby, accommodation, contribution, insuranceDate];
+      const filter = [inscategory, orderby, accommodation, contribution, insuranceDate];
 
       $.ajax({
-        url: '/wp-admin/admin-ajax.php',
-        data: data,
+        url: ajaxfilter.ajax_url,
+        data: {action : 'insurance_filter', filters: filter},
         type: 'post',
         success: function(res){
-
+          $('.vs-service-area').html(res);
         },
         error: function(res){
-
+          console.log(res);
         }
       });
     });

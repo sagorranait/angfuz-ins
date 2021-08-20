@@ -59,6 +59,7 @@ defined( 'ABSPATH' ) || exit;
         "ins_helper"    => new \Angfuz_Ins\Ins_Helper\Init(),
         "ins_cpt"       => new \Angfuz_Ins\Ins_Cpt\Init(),
         "ins_shortcode" => new \Angfuz_Ins\Shortcode\Shortcode(),
+        "insurance_filter" => new \Angfuz_Ins\Shortcode\Filter_Callback(),
       ];
       // Call the register functions
       foreach(self::$page_instance as $key ){

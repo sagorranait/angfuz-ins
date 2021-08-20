@@ -58,8 +58,8 @@ class Enqueue{
     wp_enqueue_style( 'angfuzins-fontawesome', \Angfuz_Ins::plugin_url().'assets/css/font-awesome.min.css', [], \Angfuz_Ins::version(), 'all');
     wp_enqueue_style( 'angfuzins-style', \Angfuz_Ins::plugin_url().'assets/css/style.css', [], \Angfuz_Ins::version(), 'all');
     wp_enqueue_script( 'angfuzins-bootstrapjs', \Angfuz_Ins::plugin_url().'assets/js/bootstrap.min.js', ['jquery']);
-    wp_enqueue_script( 'angfuzins-editor-js', \Angfuz_Ins::plugin_url().'assets/js/insurance-filter.js', ['jquery']);
-    wp_localize_script( 'my_ajax_filter_search', 'ajax_url', admin_url('admin-ajax.php') );
+    wp_enqueue_script( 'angfuzins-filter-js', \Angfuz_Ins::plugin_url().'assets/js/insurance-filter.js', ['jquery']);
+    wp_localize_script( 'angfuzins-filter-js', 'ajaxfilter', [ 'ajax_url' => admin_url('admin-ajax.php')]);
   }
 }
 
