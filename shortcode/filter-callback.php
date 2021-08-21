@@ -23,21 +23,20 @@ class Filter_Callback{
 
   public function insurance_filter_ajax(){
     $filter = $_POST['filters'];
-
-    $category = [$filter[0], $filter[2], $filter[3], $filter[4]];
-    echo $category;
   
     $insurances = get_posts([
       'post_type' => 'angfuzins-insurance',
       'post_status' => 'publish',
       'posts_per_page' => -1,
-      'category' => $filter[0],
+      'tax_query' => [
+        [
+          'taxonomy' => 'insaccoummodations',
+          'field'		=> 'term_id',
+          'terms'		=> $filter[2]
+        ]
+      ],
       'order' => $filter[1]
     ]);
-
-    if (isset($filter)) {
-      $insurances['category'] = array($category);
-    }
 
     if ($insurances) {
       foreach($insurances as $insurance){

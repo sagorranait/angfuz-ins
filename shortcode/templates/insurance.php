@@ -201,7 +201,7 @@ defined( 'ABSPATH' ) || exit;
             $insurances = get_posts([
               'post_type' => 'angfuzins-insurance',
               'post_status' => 'publish',
-              'posts_per_page' => -1
+              'posts_per_page' => -1,
             ]);
             if ($insurances) {
               foreach($insurances as $insurance){
