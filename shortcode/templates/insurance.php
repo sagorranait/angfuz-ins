@@ -198,11 +198,15 @@ defined( 'ABSPATH' ) || exit;
         </div>          
         <div class="vs-service-area vs-service-style1">
           <?php
+            $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+
             $insurances = get_posts([
               'post_type' => 'angfuzins-insurance',
               'post_status' => 'publish',
-              'posts_per_page' => -1,
+              'posts_per_page' => 6,
+              'paged' => $paged,
             ]);
+
             if ($insurances) {
               foreach($insurances as $insurance){
                 $batch_text	= get_post_meta( $insurance->ID, '_insurance_batch_text_key', true );
@@ -240,9 +244,6 @@ defined( 'ABSPATH' ) || exit;
                         echo '</div><ul class="list-service">';
                           $cat = '<li><a href="#">'.strip_tags(get_the_term_list($insurance->ID, 'inscategory', '<i class="plus-icon">+</i> ', ' <i class="plus-icon">+</i> ', '')).'</a></li>';
                           echo $cat;
-                          // <li><a href="#"><i class="plus-icon">+</i> Chefarztbehandlung</a></li>
-                          // <li><a href="#"><i class="plus-icon">+</i> Honorar ohne Begrenzung</a></li>
-                          // <li><a href="#"><i class="plus-icon">+</i> Ambulante OP</a></li>
                         echo '</ul>
                         <span class="label-small">Beltrag</span>
                         <span class="small text-gray">'.strip_tags(get_the_term_list($insurance->ID, 'inscontributions')).'</span>
@@ -261,16 +262,22 @@ defined( 'ABSPATH' ) || exit;
                   </div>            
                 </div>';
               }
-              wp_reset_postdata();
+              $total_pages = $insurances->max_num_pages;
+              if ($total_pages > 1) {
+                $current_page = max(1, get_query_var('paged'));
+
+                echo paginate_links([
+                  'base'      => get_pagenum_link(1) . '%_%',
+                  'format'    => '/page/%#%',
+                  'current'   => $current_page,
+                  'total'     => $total_pages,
+                  'prev_text' => __('« prev'),
+                  'next_text' => __('next »'),
+                ]);
+              }
             }
-          ?>               
-          <ul class="vs-pagination text-center">
-            <li><a href="#">01</a></li>
-            <li><a href="#">02</a></li>
-            <li><a href="#">03</a></li>
-            <li><a href="#">04</a></li>
-            <li><a href="#">05</a></li>
-          </ul>
+            wp_reset_postdata();
+          ?>
         </div>
       </div>
     </div>

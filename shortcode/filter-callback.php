@@ -75,9 +75,6 @@ class Filter_Callback{
                 echo '</div><ul class="list-service">';
                   $cat = '<li><a href="#">'.strip_tags(get_the_term_list($insurance->ID, 'inscategory', '<i class="plus-icon">+</i> ', ' <i class="plus-icon">+</i> ', '')).'</a></li>';
                   echo $cat;
-                  // <li><a href="#"><i class="plus-icon">+</i> Chefarztbehandlung</a></li>
-                  // <li><a href="#"><i class="plus-icon">+</i> Honorar ohne Begrenzung</a></li>
-                  // <li><a href="#"><i class="plus-icon">+</i> Ambulante OP</a></li>
                 echo '</ul>
                 <span class="label-small">Beltrag</span>
                 <span class="small text-gray">'.strip_tags(get_the_term_list($insurance->ID, 'inscontributions')).'</span>
