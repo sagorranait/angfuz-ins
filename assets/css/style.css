@@ -171,6 +171,27 @@ select.vs-bar-select:focus {
   padding-left: 15px;
 }
 
+p.no-insurance {
+  margin: 0;
+  text-align: center;
+  padding-top: 12px;
+}
+
+.inurance_gold {
+  background-color: rgb(255,215,0, 0.08) !important;
+  border: 1px solid rgb(255,215,0, 0.7) !important;
+}
+.inurance_gold .vs-service-top span {
+  background-color: #FFD700 !important;
+}
+.inurance_premium{
+  background-color: rgb(96,107,163, 0.08) !important;
+  border: 1px solid rgb(96,107,163, 0.7) !important;
+}
+.inurance_premium .vs-service-top span{
+  background-color: #606BA3 !important;
+}
+
 .vs-service-style1 .vs-service {
   background-color: rgba(22, 159, 230, 0.08);
   border: 1px solid rgba(22, 159, 230, 0.7);

@@ -25,9 +25,9 @@ class Insurance{
 
 		$this->input_select('insurance_batch_key', 'Insurance Batch', $batch, 
 			[
-				'standard' => 'Standard',
-				'gold' => 'Gold',
-				'premium' => 'Premium',
+				'inurance_standard' => 'Standard',
+				'inurance_gold' => 'Gold',
+				'inurance_premium' => 'Premium',
 			]
 		);
 

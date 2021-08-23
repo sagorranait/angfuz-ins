@@ -198,34 +198,35 @@ defined( 'ABSPATH' ) || exit;
         </div>          
         <div class="vs-service-area vs-service-style1">
           <?php
-            $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+            $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 
-            $insurances = get_posts([
+            $insurances = new \WP_Query([
               'post_type' => 'angfuzins-insurance',
               'post_status' => 'publish',
               'posts_per_page' => 6,
-              'paged' => $paged,
+              'paged' => $paged
             ]);
 
-            if ($insurances) {
-              foreach($insurances as $insurance){
-                $batch_text	= get_post_meta( $insurance->ID, '_insurance_batch_text_key', true );
-                $batch 			= get_post_meta( $insurance->ID, '_insurance_batch_key', true );
-                $price 			= get_post_meta( $insurance->ID, '_insurance_price_key', true );
-                $month 			= get_post_meta( $insurance->ID, '_insurance_month_key', true );
-                $price_info = get_post_meta( $insurance->ID, '_insurance_price_info_key', true );
-                $rating 		= get_post_meta( $insurance->ID, '_insurance_rating_key', true );
+            if ($insurances->have_posts()) {
+              while ($insurances->have_posts()){ $insurances->the_post();
+                global $post;
+                $batch_text	= get_post_meta( $post->ID, '_insurance_batch_text_key', true );
+                $batch 			= get_post_meta( $post->ID, '_insurance_batch_key', true );
+                $price 			= get_post_meta( $post->ID, '_insurance_price_key', true );
+                $month 			= get_post_meta( $post->ID, '_insurance_month_key', true );
+                $price_info = get_post_meta( $post->ID, '_insurance_price_info_key', true );
+                $rating 		= get_post_meta( $post->ID, '_insurance_rating_key', true );
 
-                $url = wp_get_attachment_url( get_post_thumbnail_id($insurance->ID), 'thumbnail' );
+                $url = wp_get_attachment_url( get_post_thumbnail_id($post->ID), 'thumbnail' );
 
-                echo '<div class="vs-service">
+                echo '<div class="vs-service '.$batch.'">
                   <div class="vs-service-top">
-                    <span class="top-title '.$batch.'">'.$batch_text.'</span>
+                    <span class="top-title">'.$batch_text.'</span>
                   </div>
                   <div class="vs-service-content">
                     <div class="content-left">
                       <img src="'.$url.'" alt="Service Image">
-                      <p class="small mb-0">Comfort '.strip_tags(get_the_term_list($insurance->ID, 'insaccoummodations')).' <i class="fa fa-info info-icon mt-1"></i></p>
+                      <p class="small mb-0">Comfort '.strip_tags(get_the_term_list($post->ID, 'insaccoummodations')).' <i class="fa fa-info info-icon mt-1"></i></p>
                     </div>
                     <div class="content-middle">
                       <div class="middle-left">
@@ -242,11 +243,11 @@ defined( 'ABSPATH' ) || exit;
                             echo '<i class="fa fa-star" aria-hidden="true"></i> ';
                           }
                         echo '</div><ul class="list-service">';
-                          $cat = '<li><a href="#">'.strip_tags(get_the_term_list($insurance->ID, 'inscategory', '<i class="plus-icon">+</i> ', ' <i class="plus-icon">+</i> ', '')).'</a></li>';
+                          $cat = '<li><a href="#">'.strip_tags(get_the_term_list($post->ID, 'inscategory', '<i class="plus-icon">+</i> ', ' <i class="plus-icon">+</i> ', '')).'</a></li>';
                           echo $cat;
                         echo '</ul>
                         <span class="label-small">Beltrag</span>
-                        <span class="small text-gray">'.strip_tags(get_the_term_list($insurance->ID, 'inscontributions')).'</span>
+                        <span class="small text-gray">'.strip_tags(get_the_term_list($post->ID, 'inscontributions')).'</span>
                       </div>
                     </div>
                     <div class="content-right">
@@ -261,22 +262,14 @@ defined( 'ABSPATH' ) || exit;
                     </div>
                   </div>            
                 </div>';
-              }
-              $total_pages = $insurances->max_num_pages;
-              if ($total_pages > 1) {
-                $current_page = max(1, get_query_var('paged'));
-
-                echo paginate_links([
-                  'base'      => get_pagenum_link(1) . '%_%',
-                  'format'    => '/page/%#%',
-                  'current'   => $current_page,
-                  'total'     => $total_pages,
-                  'prev_text' => __('« prev'),
-                  'next_text' => __('next »'),
-                ]);
-              }
+              }  
+              echo paginate_links();
+              wp_reset_postdata();  
+            }else{
+              echo '<div class="vs-service">
+                  <p class="no-insurance">No Insurance</p>         
+                </div>';
             }
-            wp_reset_postdata();
           ?>
         </div>
       </div>

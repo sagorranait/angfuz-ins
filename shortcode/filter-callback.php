@@ -24,39 +24,50 @@ class Filter_Callback{
   public function insurance_filter_ajax(){
     $filter = $_POST['filters'];
   
-    $insurances = get_posts([
+    $insurances = new \WP_Query([
       'post_type' => 'angfuzins-insurance',
       'post_status' => 'publish',
-      'posts_per_page' => -1,
+      'posts_per_page' => 6,
       'tax_query' => [
         [
           'taxonomy' => 'insaccoummodations',
           'field'		=> 'term_id',
           'terms'		=> $filter[2]
+        ],
+        [
+          'taxonomy' => 'inscontributions',
+          'field'		=> 'term_id',
+          'terms'		=> $filter[3]
+        ],
+        [
+          'taxonomy' => 'insdate',
+          'field'		=> 'term_id',
+          'terms'		=> $filter[4]
         ]
       ],
       'order' => $filter[1]
     ]);
 
-    if ($insurances) {
-      foreach($insurances as $insurance){
-        $batch_text	= get_post_meta( $insurance->ID, '_insurance_batch_text_key', true );
-        $batch 			= get_post_meta( $insurance->ID, '_insurance_batch_key', true );
-        $price 			= get_post_meta( $insurance->ID, '_insurance_price_key', true );
-        $month 			= get_post_meta( $insurance->ID, '_insurance_month_key', true );
-        $price_info = get_post_meta( $insurance->ID, '_insurance_price_info_key', true );
-        $rating 		= get_post_meta( $insurance->ID, '_insurance_rating_key', true );
+    if ($insurances->have_posts()) {
+      while ($insurances->have_posts()){ $insurances->the_post();
+        global $post;
+        $batch_text	= get_post_meta( $post->ID, '_insurance_batch_text_key', true );
+        $batch 			= get_post_meta( $post->ID, '_insurance_batch_key', true );
+        $price 			= get_post_meta( $post->ID, '_insurance_price_key', true );
+        $month 			= get_post_meta( $post->ID, '_insurance_month_key', true );
+        $price_info = get_post_meta( $post->ID, '_insurance_price_info_key', true );
+        $rating 		= get_post_meta( $post->ID, '_insurance_rating_key', true );
 
-        $url = wp_get_attachment_url( get_post_thumbnail_id($insurance->ID), 'thumbnail' );
+        $url = wp_get_attachment_url( get_post_thumbnail_id($post->ID), 'thumbnail' );
 
-        echo '<div class="vs-service">
+        echo '<div class="vs-service '.$batch.'">
           <div class="vs-service-top">
-            <span class="top-title '.$batch.'">'.$batch_text.'</span>
+            <span class="top-title">'.$batch_text.'</span>
           </div>
           <div class="vs-service-content">
             <div class="content-left">
               <img src="'.$url.'" alt="Service Image">
-              <p class="small mb-0">Comfort '.strip_tags(get_the_term_list($insurance->ID, 'insaccoummodations')).' <i class="fa fa-info info-icon mt-1"></i></p>
+              <p class="small mb-0">Comfort '.strip_tags(get_the_term_list($post->ID, 'insaccoummodations')).' <i class="fa fa-info info-icon mt-1"></i></p>
             </div>
             <div class="content-middle">
               <div class="middle-left">
@@ -73,11 +84,11 @@ class Filter_Callback{
                     echo '<i class="fa fa-star" aria-hidden="true"></i> ';
                   }
                 echo '</div><ul class="list-service">';
-                  $cat = '<li><a href="#">'.strip_tags(get_the_term_list($insurance->ID, 'inscategory', '<i class="plus-icon">+</i> ', ' <i class="plus-icon">+</i> ', '')).'</a></li>';
+                  $cat = '<li><a href="#">'.strip_tags(get_the_term_list($post->ID, 'inscategory', '<i class="plus-icon">+</i> ', ' <i class="plus-icon">+</i> ', '')).'</a></li>';
                   echo $cat;
                 echo '</ul>
                 <span class="label-small">Beltrag</span>
-                <span class="small text-gray">'.strip_tags(get_the_term_list($insurance->ID, 'inscontributions')).'</span>
+                <span class="small text-gray">'.strip_tags(get_the_term_list($post->ID, 'inscontributions')).'</span>
               </div>
             </div>
             <div class="content-right">
@@ -94,6 +105,10 @@ class Filter_Callback{
         </div>';
       }
       wp_reset_postdata();
+    }else{
+      echo '<div class="vs-service">
+          <p class="no-insurance">No Insurance</p>         
+        </div>';
     }
 
     die();
