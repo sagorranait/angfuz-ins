@@ -3,7 +3,13 @@
   $(document).ready(function(){
     $(document).on('change', '.insurance-filter', function(e){
       e.preventDefault();
-      let inscategory = $('input[type=checkbox]:checked').val();
+      var inscategory = []
+      let inschecked = document.querySelectorAll('input[type=checkbox]:checked');
+
+      for (var i = 0; i < inschecked.length; i++) {
+        array.push(inschecked[i].value)
+      }
+      
       let orderby = $('.insurance-default-filter').find("option:selected").val();
       let accommodation = $('.insurance-accommodation').find("option:selected").val();
       let contribution = $('.insurance-contribution').find("option:selected").val();

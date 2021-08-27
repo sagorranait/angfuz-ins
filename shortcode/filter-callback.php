@@ -28,23 +28,23 @@ class Filter_Callback{
       'post_type' => 'angfuzins-insurance',
       'post_status' => 'publish',
       'posts_per_page' => 6,
-      'tax_query' => [
-        [
-          'taxonomy' => 'insaccoummodations',
-          'field'		=> 'term_id',
-          'terms'		=> $filter[2]
-        ],
-        [
-          'taxonomy' => 'inscontributions',
-          'field'		=> 'term_id',
-          'terms'		=> $filter[3]
-        ],
-        [
-          'taxonomy' => 'insdate',
-          'field'		=> 'term_id',
-          'terms'		=> $filter[4]
-        ]
-      ],
+      // 'tax_query' => [
+      //   [
+      //     'taxonomy' => 'insaccoummodations',
+      //     'field'		=> 'term_id',
+      //     'terms'		=> $filter[2]
+      //   ],
+      //   [
+      //     'taxonomy' => 'inscontributions',
+      //     'field'		=> 'term_id',
+      //     'terms'		=> $filter[3]
+      //   ],
+      //   [
+      //     'taxonomy' => 'insdate',
+      //     'field'		=> 'term_id',
+      //     'terms'		=> $filter[4]
+      //   ]
+      // ],
       'order' => $filter[1]
     ]);
 
