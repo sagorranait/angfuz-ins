@@ -178,18 +178,18 @@ p.no-insurance {
 }
 
 .inurance_gold {
-  background-color: rgb(255,215,0, 0.08) !important;
-  border: 1px solid rgb(255,215,0, 0.7) !important;
+  background-color: rgb(255, 215, 0, 0.08) !important;
+  border: 1px solid rgb(255, 215, 0, 0.7) !important;
 }
 .inurance_gold .vs-service-top span {
-  background-color: #FFD700 !important;
+  background-color: #ffd700 !important;
 }
-.inurance_premium{
-  background-color: rgb(96,107,163, 0.08) !important;
-  border: 1px solid rgb(96,107,163, 0.7) !important;
+.inurance_premium {
+  background-color: rgb(96, 107, 163, 0.08) !important;
+  border: 1px solid rgb(96, 107, 163, 0.7) !important;
 }
-.inurance_premium .vs-service-top span{
-  background-color: #606BA3 !important;
+.inurance_premium .vs-service-top span {
+  background-color: #606ba3 !important;
 }
 
 .vs-service-style1 .vs-service {
@@ -572,22 +572,21 @@ p.no-insurance {
   padding-bottom: 10px;
 }
 
-.vs-pagination {
+.insurance-pagination {
+  text-align: center;
+}
+
+.insurance-pagination .page-numbers {
   margin: 0;
   padding: 0;
   list-style: none;
-}
-
-.vs-pagination li {
   display: inline-block;
   margin-right: 6px;
 }
-
-.vs-pagination li:last-child {
+.insurance-pagination .page-numbers:last-child {
   margin-right: 0;
 }
-
-.vs-pagination a {
+.insurance-pagination .page-numbers {
   display: inline-block;
   border: 1px solid rgba(22, 159, 230, 0.2);
   background-color: #ffffff;
@@ -598,9 +597,13 @@ p.no-insurance {
   text-align: center;
   text-decoration: none !important;
 }
-
-.vs-pagination a.active,
-.vs-pagination a:hover {
+.insurance-pagination .current {
+  background-color: #169fe6;
+  color: #ffffff;
+  border-color: transparent;
+}
+.insurance-pagination .page-numbers.active,
+.insurance-pagination .page-numbers:hover {
   background-color: #169fe6;
   color: #ffffff;
   border-color: transparent;

@@ -200,11 +200,49 @@ defined( 'ABSPATH' ) || exit;
           <?php
             $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 
+            $args = array('taxonomy' => 'inscategory','hide_empty' => false,);
+            $inscategorys = get_categories($args);
+
+            $args = array('taxonomy' => 'insaccoummodations','hide_empty' => false,);
+            $accoummodations = get_categories($args);
+
+            $args = array('taxonomy' => 'inscontributions','hide_empty' => false,);
+            $contributions = get_categories($args);
+
+            $args = array('taxonomy' => 'insdate','hide_empty' => false,);
+            $insdates = get_categories($args);
+
             $insurances = new \WP_Query([
               'post_type' => 'angfuzins-insurance',
               'post_status' => 'publish',
               'posts_per_page' => 6,
-              'paged' => $paged
+              'paged' => $paged,
+              'tax_query' =>
+                [
+                  'taxonomy' => 'inscategory',
+                  'field' => 'id',
+                  'terms' => $inscategorys,
+                  'operator' => 'NOT IN'
+                ],
+                [
+                  'taxonomy' => 'insaccoummodations',
+                  'field' => 'id',
+                  'terms' => $accoummodations,
+                  'operator' => 'NOT IN'
+                ],
+                [
+                  'taxonomy' => 'inscontributions',
+                  'field' => 'id',
+                  'terms' => $contributions,
+                  'operator' => 'NOT IN'
+                ],
+                [
+                  'taxonomy' => 'insdate',
+                  'field' => 'id',
+                  'terms' => $insdates,
+                  'operator' => 'NOT IN'
+                ],
+              'order' => 'DESC'
             ]);
 
             if ($insurances->have_posts()) {
@@ -218,6 +256,7 @@ defined( 'ABSPATH' ) || exit;
                 $rating 		= get_post_meta( $post->ID, '_insurance_rating_key', true );
 
                 $url = wp_get_attachment_url( get_post_thumbnail_id($post->ID), 'thumbnail' );
+
 
                 echo '<div class="vs-service '.$batch.'">
                   <div class="vs-service-top">
@@ -263,7 +302,19 @@ defined( 'ABSPATH' ) || exit;
                   </div>            
                 </div>';
               }  
-              echo paginate_links();
+              echo '<div class="insurance-pagination">'.paginate_links([
+                'base'         => str_replace( 999999999, '%#%', esc_url( get_pagenum_link( 999999999 ) ) ),
+                'total'        => $insurances->max_num_pages,
+                'current'      => max( 1, get_query_var( 'paged' ) ),
+                'format'       => '?paged=%#%',
+                'show_all'     => false,
+                'type'         => 'plain',
+                'end_size'     => 2,
+                'mid_size'     => 1,
+                'prev_next'    => false,
+                'add_args'     => false,
+                'add_fragment' => '',
+              ]).'<div>';
               wp_reset_postdata();  
             }else{
               echo '<div class="vs-service">

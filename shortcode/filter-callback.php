@@ -23,28 +23,39 @@ class Filter_Callback{
 
   public function insurance_filter_ajax(){
     $filter = $_POST['filters'];
+
+    $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
   
     $insurances = new \WP_Query([
       'post_type' => 'angfuzins-insurance',
       'post_status' => 'publish',
       'posts_per_page' => 6,
-      // 'tax_query' => [
+      'paged' => $paged,
+      // 'tax_query' =>
+      //   [
+      //     'taxonomy' => 'inscategory',
+      //     'field' => 'id',
+      //     'terms' => $filter[0],
+      //     'operator' => 'NOT IN'
+      //   ],
       //   [
       //     'taxonomy' => 'insaccoummodations',
-      //     'field'		=> 'term_id',
-      //     'terms'		=> $filter[2]
+      //     'field' => 'id',
+      //     'terms' => $filter[2],
+      //     'operator' => 'NOT IN'
       //   ],
       //   [
       //     'taxonomy' => 'inscontributions',
-      //     'field'		=> 'term_id',
-      //     'terms'		=> $filter[3]
+      //     'field' => 'id',
+      //     'terms' => $filter[3],
+      //     'operator' => 'NOT IN'
       //   ],
       //   [
       //     'taxonomy' => 'insdate',
-      //     'field'		=> 'term_id',
-      //     'terms'		=> $filter[4]
-      //   ]
-      // ],
+      //     'field' => 'id',
+      //     'terms' => $filter[4],
+      //     'operator' => 'NOT IN'
+      //   ],
       'order' => $filter[1]
     ]);
 
@@ -104,6 +115,19 @@ class Filter_Callback{
           </div>            
         </div>';
       }
+      echo paginate_links( array(
+        'base'         => str_replace( 999999999, '%#%', esc_url( get_pagenum_link( 999999999 ) ) ),
+        'total'        => $insurances->max_num_pages,
+        'current'      => max( 1, get_query_var( 'paged' ) ),
+        'format'       => '?paged=%#%',
+        'show_all'     => false,
+        'type'         => 'plain',
+        'end_size'     => 2,
+        'mid_size'     => 1,
+        'prev_next'    => false,
+        'add_args'     => false,
+        'add_fragment' => '',
+    ) );
       wp_reset_postdata();
     }else{
       echo '<div class="vs-service">
