@@ -23,6 +23,7 @@ class Filter_Callback{
 
   public function insurance_filter_ajax(){
     $filter = $_POST['filters'];
+    print_r($filter);
 
     $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
   
@@ -30,33 +31,8 @@ class Filter_Callback{
       'post_type' => 'angfuzins-insurance',
       'post_status' => 'publish',
       'posts_per_page' => 6,
+      'order' => $filter[1],
       'paged' => $paged,
-      // 'tax_query' =>
-      //   [
-      //     'taxonomy' => 'inscategory',
-      //     'field' => 'id',
-      //     'terms' => $filter[0],
-      //     'operator' => 'NOT IN'
-      //   ],
-      //   [
-      //     'taxonomy' => 'insaccoummodations',
-      //     'field' => 'id',
-      //     'terms' => $filter[2],
-      //     'operator' => 'NOT IN'
-      //   ],
-      //   [
-      //     'taxonomy' => 'inscontributions',
-      //     'field' => 'id',
-      //     'terms' => $filter[3],
-      //     'operator' => 'NOT IN'
-      //   ],
-      //   [
-      //     'taxonomy' => 'insdate',
-      //     'field' => 'id',
-      //     'terms' => $filter[4],
-      //     'operator' => 'NOT IN'
-      //   ],
-      'order' => $filter[1]
     ]);
 
     if ($insurances->have_posts()) {

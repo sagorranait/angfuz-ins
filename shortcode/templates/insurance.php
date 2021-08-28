@@ -200,49 +200,11 @@ defined( 'ABSPATH' ) || exit;
           <?php
             $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 
-            $args = array('taxonomy' => 'inscategory','hide_empty' => false,);
-            $inscategorys = get_categories($args);
-
-            $args = array('taxonomy' => 'insaccoummodations','hide_empty' => false,);
-            $accoummodations = get_categories($args);
-
-            $args = array('taxonomy' => 'inscontributions','hide_empty' => false,);
-            $contributions = get_categories($args);
-
-            $args = array('taxonomy' => 'insdate','hide_empty' => false,);
-            $insdates = get_categories($args);
-
             $insurances = new \WP_Query([
               'post_type' => 'angfuzins-insurance',
               'post_status' => 'publish',
               'posts_per_page' => 6,
               'paged' => $paged,
-              'tax_query' =>
-                [
-                  'taxonomy' => 'inscategory',
-                  'field' => 'id',
-                  'terms' => $inscategorys,
-                  'operator' => 'NOT IN'
-                ],
-                [
-                  'taxonomy' => 'insaccoummodations',
-                  'field' => 'id',
-                  'terms' => $accoummodations,
-                  'operator' => 'NOT IN'
-                ],
-                [
-                  'taxonomy' => 'inscontributions',
-                  'field' => 'id',
-                  'terms' => $contributions,
-                  'operator' => 'NOT IN'
-                ],
-                [
-                  'taxonomy' => 'insdate',
-                  'field' => 'id',
-                  'terms' => $insdates,
-                  'operator' => 'NOT IN'
-                ],
-              'order' => 'DESC'
             ]);
 
             if ($insurances->have_posts()) {

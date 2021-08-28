@@ -3,11 +3,11 @@
   $(document).ready(function(){
     $(document).on('change', '.insurance-filter', function(e){
       e.preventDefault();
-      var inscategory = []
+      var inscategory = ['0']
       let inschecked = document.querySelectorAll('input[type=checkbox]:checked');
 
       for (var i = 0; i < inschecked.length; i++) {
-        array.push(inschecked[i].value)
+        inscategory.push(inschecked[i].value)
       }
       
       let orderby = $('.insurance-default-filter').find("option:selected").val();
