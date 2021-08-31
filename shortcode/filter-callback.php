@@ -24,16 +24,60 @@ class Filter_Callback{
   public function insurance_filter_ajax(){
     $filter = $_POST['filters'];
     print_r($filter);
-
+    // if (isset($filter[1])) {
+    //   echo $filter[1];
+    // }
     $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-  
-    $insurances = new \WP_Query([
+    $insurance_args = [
       'post_type' => 'angfuzins-insurance',
       'post_status' => 'publish',
       'posts_per_page' => 6,
-      'order' => $filter[1],
       'paged' => $paged,
-    ]);
+    ];
+    if (isset($filter[1])) {
+      $insurance_args['order'] = $filter[1];
+    }
+    if (isset($filter[2])) {
+      $insurance_args['tax_query'] = array( 'relation'=>'AND' );
+      $insurance_args['tax_query'] = [
+        [
+          'taxonomy'  => 'insaccoummodations',
+          'field'		  => 'term_id',
+          'terms'     => $filter[2],
+          'operator'  => 'IN'
+        ],
+        [
+          'taxonomy'  => 'inscontributions',
+          'field'		  => 'term_id',
+          'terms'     => $filter[3],
+          'operator'  => 'IN'
+        ],
+        [
+          'taxonomy'  => 'insdate',
+          'field'		  => 'term_id',
+          'terms'     => $filter[4],
+          'operator'  => 'IN'
+        ]
+      ];
+    }
+    // if (isset($filter[3])) {
+    //   $insurance_args['tax_query'][] = [
+    //     'taxonomy'  => 'inscontributions',
+    //     'field'		  => 'term_id',
+    //     'terms'     => $filter[3],
+    //     'operator'  => 'IN'
+    //   ];
+    // }
+    // if (isset($filter[4])) {
+    //   $insurance_args['tax_query'][] = [
+    //     'taxonomy'  => 'insdate',
+    //     'field'		  => 'term_id',
+    //     'terms'     => $filter[4],
+    //     'operator'  => 'IN'
+    //   ];
+    // }
+    $insurances = new \WP_Query($insurance_args);
+    
 
     if ($insurances->have_posts()) {
       while ($insurances->have_posts()){ $insurances->the_post();
