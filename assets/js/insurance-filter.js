@@ -3,26 +3,33 @@
   $(document).ready(function(){
     $(document).on('change', '.insurance-filter', function(e){
       e.preventDefault();
-      var inscategory = [''];
-      let inschecked = document.querySelectorAll('input[type=checkbox]:checked');
+      var inscategory = [];
+    //  let inscategory = $('input[type=checkbox]:checked').val();
 
-      for (var i = 0; i < inschecked.length; i++) {
-        inscategory.push(inschecked[i].value)
+    /*  for (var i = 0; i < inschecked.length; i++) {
+         inscategory.push(inschecked[i].value)
       }
-      
+	*/
+	
+	jQuery(".inscategory:checked").each(function(i,e) {
+			inscategory.push(jQuery(this).val());
+	});
+	
       let orderby = $('.insurance-default-filter').find("option:selected").val();
       let accommodation = $('.insurance-accommodation').find("option:selected").val();
       let contribution = $('.insurance-contribution').find("option:selected").val();
       let insuranceDate = $('.insurance-date').find("option:selected").val();
 
-      const filter = [inscategory, orderby, accommodation, contribution, insuranceDate];
-
       $.ajax({
         url: ajaxfilter.ajax_url,
         dataType: 'html',
         data: {
-          action : 'insurance_filter', 
-          filters: filter
+          'action' : 'insurance_filter', 
+          'order' : orderby,
+          'categoryOne[]' : inscategory.join(),
+          'categoryTwo' : accommodation,
+          'categorythree' : contribution,
+          'categoryFour' : insuranceDate,
         },
         type: 'post',
         success: function(res){

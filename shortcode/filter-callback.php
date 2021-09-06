@@ -22,60 +22,94 @@ class Filter_Callback{
   }
 
   public function insurance_filter_ajax(){
-    $filter = $_POST['filters'];
-    print_r($filter);
-    // if (isset($filter[1])) {
-    //   echo $filter[1];
-    // }
+
+    $orderby = $_POST['order'];
+    $inscategory = $_POST['categoryOne'];
+    $accommodation = $_POST['categoryTwo'];
+    $contribution = $_POST['categorythree'];
+    $insuranceDate = $_POST['categoryFour'];
     $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-    $insurance_args = [
-      'post_type' => 'angfuzins-insurance',
-      'post_status' => 'publish',
-      'posts_per_page' => 6,
-      'paged' => $paged,
+
+if($orderby){
+
+    $orderby = $orderby;
+
+} else {
+
+    $orderby = 'DESC';
+
+}
+
+if(strlen($inscategory[0]) > 0){
+
+    $terms = implode(",", $inscategory);
+    $inscategory_tax_query  =  [
+                'taxonomy'  => 'inscategory',
+                'field'     => 'term_id',
+                'terms'     => $terms
+              ];
+              
+} else {
+
+    $inscategory_tax_query  = '';
+
+}
+
+if($accommodation){
+
+    $accommodation_tax_query =  [
+                'taxonomy'   => 'insaccoummodations',
+                'field'      => 'slug',
+                'terms'      => $accommodation
+              ];
+} else {
+
+    $accommodation_tax_query = '';
+
+}
+
+if($contribution){
+
+    $contribution_tax_query =  [
+                'taxonomy'  => 'inscontributions',
+                'field'     => 'slug',
+                'terms'     => $contribution
+              ];
+
+} else {
+
+    $contribution_tax_query = '';
+
+}
+
+if($insuranceDate){
+
+    $insuranceDate_tax_query =  [
+                'taxonomy'   => 'insdate',
+                'field'      => 'slug',
+                'terms'      => $insuranceDate
+              ];
+} else {
+
+    $insuranceDate_tax_query = '';
+
+}
+
+    $insurance_args     = [
+      'post_type'       => 'angfuzins-insurance',
+      'post_status'     => 'publish',
+      'posts_per_page'  => 6,
+      'order'           => $orderby,
+      'paged'           => $paged,
+      'tax_query'       => [
+          'relation'    => 'AND',  
+          $inscategory_tax_query,
+          $accommodation_tax_query, 
+          $contribution_tax_query, 
+          $insuranceDate_tax_query,
+      ],        
     ];
-    if (isset($filter[1])) {
-      $insurance_args['order'] = $filter[1];
-    }
-    if (isset($filter[2])) {
-      $insurance_args['tax_query'] = array( 'relation'=>'AND' );
-      $insurance_args['tax_query'] = [
-        [
-          'taxonomy'  => 'insaccoummodations',
-          'field'		  => 'term_id',
-          'terms'     => $filter[2],
-          'operator'  => 'IN'
-        ],
-        [
-          'taxonomy'  => 'inscontributions',
-          'field'		  => 'term_id',
-          'terms'     => $filter[3],
-          'operator'  => 'IN'
-        ],
-        [
-          'taxonomy'  => 'insdate',
-          'field'		  => 'term_id',
-          'terms'     => $filter[4],
-          'operator'  => 'IN'
-        ]
-      ];
-    }
-    // if (isset($filter[3])) {
-    //   $insurance_args['tax_query'][] = [
-    //     'taxonomy'  => 'inscontributions',
-    //     'field'		  => 'term_id',
-    //     'terms'     => $filter[3],
-    //     'operator'  => 'IN'
-    //   ];
-    // }
-    // if (isset($filter[4])) {
-    //   $insurance_args['tax_query'][] = [
-    //     'taxonomy'  => 'insdate',
-    //     'field'		  => 'term_id',
-    //     'terms'     => $filter[4],
-    //     'operator'  => 'IN'
-    //   ];
-    // }
+  
     $insurances = new \WP_Query($insurance_args);
     
 

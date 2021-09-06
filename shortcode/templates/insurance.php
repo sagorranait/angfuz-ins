@@ -45,7 +45,7 @@ defined( 'ABSPATH' ) || exit;
             );
             $blockone = get_categories($args);
             foreach($blockone as $block){
-              echo '<div class="sidebox-check"><input type="checkbox" class="inscategory" id="'.$block->term_id.'" value="'.$block->term_id.'"><label for="'.$block->term_id.'">'.$block->name.' <i class="fa fa-question modal-toggler" data-modal="#modal-no1" aria-hidden="true"></i></label></div>';
+              echo '<div class="sidebox-check"><input type="checkbox" name="inscategory[]" class="inscategory" id="'.$block->term_id.'" value="'.$block->term_id.'"><label for="'.$block->term_id.'">'.$block->name.' <i class="fa fa-question modal-toggler" data-modal="#modal-no1" aria-hidden="true"></i></label></div>';
             }
           ?>
         </div>
@@ -54,6 +54,7 @@ defined( 'ABSPATH' ) || exit;
           <div class="select-inline">
             <div>
               <select class="insurance-accommodation">
+                <option value=""><?php esc_html_e('All','angfuz-ins');?></option>
               <?php
                 $args = array(
                   'taxonomy' => 'insaccoummodations',
@@ -62,7 +63,7 @@ defined( 'ABSPATH' ) || exit;
                 );
                 $blocktwo = get_categories($args);
                 foreach($blocktwo as $block){
-                  echo '<option value="'.$block->term_id.'">'.$block->name.'</option>';
+                  echo '<option value="'.$block->slug.'">'.$block->name.'</option>';
                 }
               ?>
               </select>
@@ -79,6 +80,7 @@ defined( 'ABSPATH' ) || exit;
         <div class="sidebox-wrap">
           <h3 class="sidebox-title">Contribution development <i class="fa fa-info info-icon mt-1"></i></h3>
           <select class="insurance-contribution">
+            <option value=""><?php esc_html_e('All','angfuz-ins');?></option>
             <?php
               $args = array(
                 'taxonomy' => 'inscontributions',
@@ -87,7 +89,7 @@ defined( 'ABSPATH' ) || exit;
               );
               $blockthree = get_categories($args);
               foreach($blockthree as $block){
-                echo '<option value="'.$block->term_id.'">'.$block->name.'</option>';
+                echo '<option value="'.$block->slug.'">'.$block->name.'</option>';
               }
             ?>
           </select>
@@ -97,6 +99,7 @@ defined( 'ABSPATH' ) || exit;
           <div class="select-inline">
             <div>
               <select class="insurance-date">
+                <option value=""><?php esc_html_e('All','angfuz-ins');?></option>
                 <?php
                   $args = array(
                     'taxonomy' => 'insdate',
@@ -105,7 +108,7 @@ defined( 'ABSPATH' ) || exit;
                   );
                   $blockfour = get_categories($args);
                   foreach($blockfour as $block){
-                    echo '<option value="'.$block->term_id.'">'.$block->name.'</option>';
+                    echo '<option value="'.$block->slug.'">'.$block->name.'</option>';
                   }
                 ?>
               </select>
