@@ -30,70 +30,52 @@ class Filter_Callback{
     $insuranceDate = $_POST['categoryFour'];
     $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 
-if($orderby){
+    if($orderby){
+      $orderby = $orderby;
+    } else {
+        $orderby = 'DESC';
+      }
 
-    $orderby = $orderby;
+    if(strlen($inscategory[0]) > 0){
+        $terms = implode(",", $inscategory);
+        $inscategory_tax_query  =  [
+            'taxonomy'  => 'inscategory',
+            'field'     => 'term_id',
+            'terms'     => $terms
+          ]; 
+    } else {
+        $inscategory_tax_query  = '';
+    }
 
-} else {
+    if($accommodation){
+        $accommodation_tax_query =  [
+          'taxonomy'   => 'insaccoummodations',
+          'field'      => 'slug',
+          'terms'      => $accommodation
+        ];
+    } else {
+        $accommodation_tax_query = '';
+    }
 
-    $orderby = 'DESC';
+    if($contribution){
+        $contribution_tax_query =  [
+          'taxonomy'  => 'inscontributions',
+          'field'     => 'slug',
+          'terms'     => $contribution
+        ];
+    } else {
+        $contribution_tax_query = '';
+    }
 
-}
-
-if(strlen($inscategory[0]) > 0){
-
-    $terms = implode(",", $inscategory);
-    $inscategory_tax_query  =  [
-                'taxonomy'  => 'inscategory',
-                'field'     => 'term_id',
-                'terms'     => $terms
-              ];
-              
-} else {
-
-    $inscategory_tax_query  = '';
-
-}
-
-if($accommodation){
-
-    $accommodation_tax_query =  [
-                'taxonomy'   => 'insaccoummodations',
-                'field'      => 'slug',
-                'terms'      => $accommodation
-              ];
-} else {
-
-    $accommodation_tax_query = '';
-
-}
-
-if($contribution){
-
-    $contribution_tax_query =  [
-                'taxonomy'  => 'inscontributions',
-                'field'     => 'slug',
-                'terms'     => $contribution
-              ];
-
-} else {
-
-    $contribution_tax_query = '';
-
-}
-
-if($insuranceDate){
-
-    $insuranceDate_tax_query =  [
-                'taxonomy'   => 'insdate',
-                'field'      => 'slug',
-                'terms'      => $insuranceDate
-              ];
-} else {
-
-    $insuranceDate_tax_query = '';
-
-}
+    if($insuranceDate){
+        $insuranceDate_tax_query =  [
+          'taxonomy'   => 'insdate',
+          'field'      => 'slug',
+          'terms'      => $insuranceDate
+        ];
+    } else {
+        $insuranceDate_tax_query = '';
+    }
 
     $insurance_args     = [
       'post_type'       => 'angfuzins-insurance',

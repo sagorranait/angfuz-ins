@@ -11,9 +11,9 @@
       }
 	*/
 	
-	jQuery(".inscategory:checked").each(function(i,e) {
-			inscategory.push(jQuery(this).val());
-	});
+      jQuery(".inscategory:checked").each(function(i,e) {
+          inscategory.push(jQuery(this).val());
+      });
 	
       let orderby = $('.insurance-default-filter').find("option:selected").val();
       let accommodation = $('.insurance-accommodation').find("option:selected").val();
